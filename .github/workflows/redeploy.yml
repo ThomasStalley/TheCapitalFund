@@ -9,9 +9,9 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     env:
-      pythonpath: ${{ github.workspace }}
-      api_key: ${{ secrets.API_KEY }}
-      pepper: ${{ secrets.PEPPER }}
+      PYTHONPATH: ${{ github.workspace }}
+      API_KEY: ${{ secrets.API_KEY }}
+      PEPPER: ${{ secrets.PEPPER }}
 
     steps:
       - name: checkout repo content
@@ -20,7 +20,22 @@ jobs:
       - name: set up python 3.9
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: '3.9'
+
+      - name: verify secrets
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo "API_KEY is not set"
+            exit 1
+          else
+            echo "API_KEY is set"
+          fi
+          if [ -z "$PEPPER" ]; then
+            echo "PEPPER is not set"
+            exit 1
+          else
+            echo "PEPPER is set"
+          fi
 
       - name: install poetry
         run: |
