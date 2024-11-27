@@ -22,21 +22,6 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: verify secrets
-        run: |
-          if [ -z "$API_KEY" ]; then
-            echo "API_KEY is not set"
-            exit 1
-          else
-            echo "API_KEY is set"
-          fi
-          if [ -z "$PEPPER" ]; then
-            echo "PEPPER is not set"
-            exit 1
-          else
-            echo "PEPPER is set"
-          fi
-
       - name: install poetry
         run: |
           curl -sSL https://install.python-poetry.org | python -
