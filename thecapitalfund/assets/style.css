@@ -1,0 +1,311 @@
+* {
+  font-family: "Garamond";
+  font-size: 18px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.middle {
+  text-align: center;
+}
+
+.title {
+   font-size: 24px;
+}
+
+.subtitle {
+   font-size: 18px;
+   color: #BC0909;
+}
+
+.popover-text {
+  font-size: 14px;
+  text-align: center;
+}
+
+li {
+  list-style-type: none
+}
+
+@font-face {
+    font-family: "temp";
+    src: url("temp.ttf") format("truetype");
+}
+
+.temp {
+  font-family: "temp";
+}
+
+.red-temp {
+  font-family: "temp";
+  color: #BD0404 !important;
+}
+
+#AppContainer, {
+  overflow-x: hidden;
+}
+
+p, th, td {
+  text-align: center;
+}
+
+.table-header:hover {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.login-tab {
+    display: none;
+}
+.login-tab.active {
+    display: block;
+}
+
+#PerformanceBar {
+  width: 100%;
+  border-radius: 0.25rem;
+  border: 1px solid #00000030;
+  overflow: hidden;
+}
+
+#PerformanceBar button {
+  font-size: 14px;
+}
+
+#OpenModalLogin {
+  color: #000;
+  background-color: #fff;
+  font-size: 16px;
+  font-family: "temp";
+}
+
+#ModalLogin {
+  top: 165px;
+}
+
+#ModalHeaderText {
+  margin: 5px 0;
+  font-size: 30px;
+  font-family: "temp";
+}
+
+#UserIdInput, #UserPasswordInput {
+  font-size: 16px;
+  margin-top: 1px;
+  width: 100%;
+  text-align: center;
+  border-radius: 0.25rem;
+  border: 1px solid #00000030;
+}
+
+#ValueText{
+  position: absolute;
+  top: 20px;
+  left: 270px;
+  font-size: 18px;
+}
+
+#PercentText{
+  position: absolute;
+  top: 56px;
+  left: 270px;
+  font-size: 18px;
+}
+
+.equal-width-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.equal-width-columns th, .equal-width-columns td {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.update-text {
+   font-size: 12px;
+}
+
+.table {
+  border-color: transparent;
+}
+
+#FooterHomeButton {
+  color: black;
+  font-size: 18px;
+  font-family: "temp";
+  border: 1px solid #00000030;
+  background: #FFF;
+  position: relative;
+  left: -168px;
+}
+
+#FooterLoginButton {
+  color: black;
+  font-size: 18px;
+  font-family: "temp";
+  border: 1px solid #00000030;
+  background: #FFF;
+}
+
+#FooterHomeButton:active {
+  color: #BD0404;
+  font-size: 18px;
+  font-family: "temp";
+  border: 1px solid #BD0404;
+  background: white;
+  position: relative;
+  left: -168px;
+}
+
+#FooterLoginButton:active {
+  color: #BD0404;
+  font-size: 18px;
+  font-family: "temp";
+  border: 1px solid #BD0404;
+  background: white;
+}
+
+._dash-loading {
+  margin: auto;
+  color: #000;
+  width: 100vw;
+  height: 100vh;
+  font-family: "temp";
+  color: #BC0909;
+  font-size: 12px;
+
+  text-align: center;
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
+}
+
+#NavBarTabs {
+    border-radius: 0.25rem;
+    border: 1px solid #00000030;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+}
+
+#TabContentCol {
+  border: 1px solid #00000030;
+  border-radius: 0.25rem;
+}
+
+.nav-tabs {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.nav-item {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.nav-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    font-family: "temp";
+}
+
+.nav-tabs .nav-link.active {
+    color: #BD0404;
+    border: 1px solid #BD0404;
+    border-radius: 0.2rem;
+}
+
+.nav-tabs .nav-link:focus {
+    border-radius: 0.2rem;
+}
+
+.nav-tabs .nav-link:hover {
+    border-radius: 0.2rem;
+}
+
+.nav-tabs .nav-link {
+    background-color: white;
+    color: black;
+}
+
+.nav-tabs .nav-link {
+  border-top-left-radius: var(--bs-nav-tabs-border-radius);
+  border-top-right-radius: var(--bs-nav-tabs-border-radius);
+  border-bottom-left-radius: var(--bs-nav-tabs-border-radius);
+  border-bottom-right-radius: var(--bs-nav-tabs-border-radius);
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.nav-tabs {
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+}
+
+.nav-item {
+    flex-shrink: 0;
+}
+
+.nav-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    font-family: "temp";
+    margin: 0;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#NavBar::-webkit-scrollbar {
+    height: 8px;
+}
+
+#NavBar::-webkit-scrollbar-thumb {
+    background-color: #BD0404CF;
+    border-radius: 10px;
+}
+
+#NavBar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#ArchitectureTab, #ScheduleTab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
