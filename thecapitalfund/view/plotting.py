@@ -56,7 +56,7 @@ def _format_figure(figure: go.Figure):
     for ele in figure.data:
         ele.hoverinfo = "none"
         ele.hovertemplate = "%{x|%d %b %Y}: £%{y:.2f}"
-
+        ele.hoverlabel = dict(bgcolor=ele.line.color)
 
 def _update_y_axis(y_axis):
     """Formatting all y-axes within a figure."""
