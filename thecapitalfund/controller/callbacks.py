@@ -4,9 +4,9 @@ import dash
 import pandas as pd
 from dash import Input, Output, State, no_update
 
-from capitalapp.controller import login, models
-from capitalapp.model import members, prices, transactions
-from capitalapp.view import plotting
+from thecapitalfund.controller import login, models
+from thecapitalfund.model import members, prices, transactions
+from thecapitalfund.view import plotting
 
 prices_data = pd.DataFrame(prices.get_asset_data())
 

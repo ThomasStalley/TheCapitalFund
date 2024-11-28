@@ -1,8 +1,8 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from capitalapp.model import prices
-from capitalapp.view import plotting
+from thecapitalfund.model import prices
+from thecapitalfund.view import plotting
 
 
 def get_layout() -> html.Div:
@@ -332,8 +332,8 @@ def get_layout() -> html.Div:
                         [
                             "See the source code in github: ",
                             html.A(
-                                "github.com/thomasstalley/capitalapp",
-                                href="https://github.com/thomasstalley/capitalapp",
+                                "github.com/thomasstalley/thecapitalfund",
+                                href="https://github.com/thomasstalley/thecapitalfund",
                                 target="_blank",
                                 style={"color": "#BD0404"},
                             ),
