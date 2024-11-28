@@ -520,6 +520,7 @@ def get_layout() -> html.Div:
                                                 style={
                                                     "display": "none",
                                                 },
+                                            ),
                                             html.Div(
                                                 id="AboutContent",
                                                 children=_about_tab,
