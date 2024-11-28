@@ -1,8 +1,8 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from thecapitalfund.model import prices
-from thecapitalfund.view import plotting
+from capitalapp.model import prices
+from capitalapp.view import plotting
 
 
 def get_layout() -> html.Div:
@@ -295,6 +295,24 @@ def get_layout() -> html.Div:
             ),
         ],
     )
+    _architecture_tab = dbc.Container(
+        id="ArchitectureTab",
+        children=[
+            html.Img(
+                src="/assets/architecture.png",
+                style={"width": "100%", "max-width": "1000px", "padding-top": "100px", "padding-bottom": "100px"},
+            ),
+        ],
+    )
+    _schedule_tab = dbc.Container(
+        id="ScheduleTab",
+        children=[
+            html.Img(
+                src="/assets/cicd.png",
+                style={"width": "100%", "max-width": "1000px", "padding-top": "100px", "padding-bottom": "100px"},
+            ),
+        ],
+    )
     _about_tab = dbc.Container(
         id="AboutTab",
         children=[
@@ -314,8 +332,8 @@ def get_layout() -> html.Div:
                         [
                             "See the source code in github: ",
                             html.A(
-                                "github.com/thomasstalley/thecapitalfund",
-                                href="https://github.com/thomasstalley/thecapitalfund",
+                                "github.com/thomasstalley/capitalapp",
+                                href="https://github.com/thomasstalley/capitalapp",
                                 target="_blank",
                                 style={"color": "#BD0404"},
                             ),
@@ -467,6 +485,14 @@ def get_layout() -> html.Div:
                                                 tab_id="asset",
                                             ),
                                             dbc.Tab(
+                                                label="Architecture",
+                                                tab_id="architecture",
+                                            ),
+                                            dbc.Tab(
+                                                label="Schedule",
+                                                tab_id="schedule",
+                                            ),
+                                            dbc.Tab(
                                                 label="About",
                                                 tab_id="about",
                                             ),
@@ -517,6 +543,20 @@ def get_layout() -> html.Div:
                                             html.Div(
                                                 id="AssetContent",
                                                 children=_assets_tab,
+                                                style={
+                                                    "display": "none",
+                                                },
+                                            ),
+                                            html.Div(
+                                                id="ArchitectureContent",
+                                                children=_architecture_tab,
+                                                style={
+                                                    "display": "none",
+                                                },
+                                            ),
+                                            html.Div(
+                                                id="ScheduleContent",
+                                                children=_schedule_tab,
                                                 style={
                                                     "display": "none",
                                                 },

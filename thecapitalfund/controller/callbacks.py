@@ -4,9 +4,9 @@ import dash
 import pandas as pd
 from dash import Input, Output, State, no_update
 
-from thecapitalfund.controller import login, models
-from thecapitalfund.model import members, prices, transactions
-from thecapitalfund.view import plotting
+from capitalapp.controller import login, models
+from capitalapp.model import members, prices, transactions
+from capitalapp.view import plotting
 
 prices_data = pd.DataFrame(prices.get_asset_data())
 
@@ -70,6 +70,8 @@ def _get_member_timeline(chosen_member: dict) -> list[float]:
     Output("PerformanceContent", "style"),
     Output("AssetContent", "style"),
     Output("FundContent", "style"),
+    Output("ArchitectureContent", "style"),
+    Output("ScheduleContent", "style"),
     Output("AboutContent", "style"),
     Input("NavBarTabs", "active_tab"),
 )
@@ -78,7 +80,7 @@ def nav_bar_interaction(active_tab):
     hidden = {"display": "none"}
     visible = {"display": "block"}
     active_tab = active_tab or "performance"
-    contents = ["performance", "asset", "fund", "about"]
+    contents = ["performance", "asset", "fund", "architecture", "schedule", "about"]
     return [visible if active_tab == content else hidden for content in contents]
 
 
