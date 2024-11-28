@@ -70,8 +70,6 @@ def _get_member_timeline(chosen_member: dict) -> list[float]:
     Output("PerformanceContent", "style"),
     Output("AssetContent", "style"),
     Output("FundContent", "style"),
-    Output("ArchitectureContent", "style"),
-    Output("ScheduleContent", "style"),
     Output("AboutContent", "style"),
     Input("NavBarTabs", "active_tab"),
 )
@@ -80,7 +78,7 @@ def nav_bar_interaction(active_tab):
     hidden = {"display": "none"}
     visible = {"display": "block"}
     active_tab = active_tab or "performance"
-    contents = ["performance", "asset", "fund", "architecture", "schedule", "about"]
+    contents = ["performance", "asset", "fund", "about"]
     return [visible if active_tab == content else hidden for content in contents]
 
 

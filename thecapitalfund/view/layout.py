@@ -295,24 +295,6 @@ def get_layout() -> html.Div:
             ),
         ],
     )
-    _architecture_tab = dbc.Container(
-        id="ArchitectureTab",
-        children=[
-            html.Img(
-                src="/assets/architecture.png",
-                style={"width": "100%", "max-width": "1000px", "padding-top": "100px", "padding-bottom": "100px"},
-            ),
-        ],
-    )
-    _schedule_tab = dbc.Container(
-        id="ScheduleTab",
-        children=[
-            html.Img(
-                src="/assets/cicd.png",
-                style={"width": "100%", "max-width": "1000px", "padding-top": "100px", "padding-bottom": "100px"},
-            ),
-        ],
-    )
     _about_tab = dbc.Container(
         id="AboutTab",
         children=[
@@ -485,14 +467,6 @@ def get_layout() -> html.Div:
                                                 tab_id="asset",
                                             ),
                                             dbc.Tab(
-                                                label="Architecture",
-                                                tab_id="architecture",
-                                            ),
-                                            dbc.Tab(
-                                                label="Schedule",
-                                                tab_id="schedule",
-                                            ),
-                                            dbc.Tab(
                                                 label="About",
                                                 tab_id="about",
                                             ),
@@ -546,21 +520,6 @@ def get_layout() -> html.Div:
                                                 style={
                                                     "display": "none",
                                                 },
-                                            ),
-                                            html.Div(
-                                                id="ArchitectureContent",
-                                                children=_architecture_tab,
-                                                style={
-                                                    "display": "none",
-                                                },
-                                            ),
-                                            html.Div(
-                                                id="ScheduleContent",
-                                                children=_schedule_tab,
-                                                style={
-                                                    "display": "none",
-                                                },
-                                            ),
                                             html.Div(
                                                 id="AboutContent",
                                                 children=_about_tab,
