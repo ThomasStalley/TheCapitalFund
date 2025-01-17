@@ -4,6 +4,16 @@ from dash import dcc, html
 from thecapitalfund.model import prices
 from thecapitalfund.view import plotting
 
+DELTAS = prices.deltas()
+
+
+def format_delta(stock):
+    increase = stock["today"] > stock["yesterday"]
+    arrow = "▲" if increase else "▼"
+    color = "#398C1D" if increase else "#BF0417"
+    span = html.Span(f"{stock['symbol']} {stock['today']} {arrow} ", style={"color": color, "font-family": "dots"})
+    return span
+
 
 def get_layout() -> html.Div:
     """Construct and return app layout."""
@@ -343,6 +353,16 @@ def get_layout() -> html.Div:
             ),
         ],
     )
+    # construct delta banner screen:
+    delta_screen = html.Div(
+        id="DeltaScreen",
+        children=[
+            html.Div(
+                className="scrolling-text",
+                children=[format_delta(d) for d in 200 * DELTAS],
+            )
+        ],
+    )
     # construct main layout:
     layout = html.Div(
         id="AppContainer",
@@ -441,6 +461,16 @@ def get_layout() -> html.Div:
                         children=[
                             "The Capital Fund",
                         ],
+                    ),
+                    dbc.Row(
+                        id="DeltaScreenRow",
+                        justify="center",
+                        children=dbc.Col(
+                            width=9,
+                            children=[
+                                delta_screen,
+                            ],
+                        ),
                     ),
                     dbc.Row(
                         id="NavBar",

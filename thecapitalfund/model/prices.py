@@ -25,6 +25,13 @@ def get_price(asset: str) -> float:
     return price
 
 
+def get_yesterday_price(asset: str) -> float:
+    """Get today's price of chosen asset."""
+    data_dict = get_asset_data()
+    price = round(data_dict.get(asset)[-2], 2)
+    return price
+
+
 def day_percent_change(asset: str) -> str:
     """Get percentage change in asset price between today and one day prior."""
     data_dict = get_asset_data()
@@ -59,7 +66,7 @@ def all_time_percent_change(asset: str) -> str:
 
 def today() -> dict:
     """Construct dictionary of data to use in holdings table."""
-    today = {
+    today_dict = {
         "tcf_price": get_price("ACF"),
         "van_price": get_price("VAN"),
         "btc_price": get_price("BTC"),
@@ -77,4 +84,15 @@ def today() -> dict:
         "week_percent_change_eth": week_percent_change("ETH"),
         "all_time_percent_change_eth": all_time_percent_change("ETH"),
     }
-    return today
+    return today_dict
+
+
+def deltas() -> dict:
+    """Construct dictionary of price changes to use in deltas screen."""
+    deltas_dict = [
+        {"symbol": "TCF-GBP", "today": get_price("ACF"), "yesterday": get_yesterday_price("ACF")},
+        {"symbol": "VAEIAGA", "today": get_price("VAN"), "yesterday": get_yesterday_price("VAN")},
+        {"symbol": "BTC-GBP", "today": get_price("BTC"), "yesterday": get_yesterday_price("BTC")},
+        {"symbol": "ETH-GBP", "today": get_price("ETH"), "yesterday": get_yesterday_price("ETH")},
+    ]
+    return deltas_dict

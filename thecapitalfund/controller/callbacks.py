@@ -78,6 +78,7 @@ def nav_bar_interaction(active_tab):
     hidden = {"display": "none"}
     visible = {"display": "block"}
     active_tab = active_tab or "performance"
+    # delta screen is visible only when performance tab
     contents = ["performance", "asset", "fund", "about"]
     return [visible if active_tab == content else hidden for content in contents]
 
