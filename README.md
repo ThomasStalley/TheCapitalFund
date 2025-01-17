@@ -32,14 +32,19 @@ model-view-controller architecture:
 .
 ├── Dockerfile
 ├── README.md
+├── docker-compose.yml
 ├── poetry.lock
 ├── pyproject.toml
 └── thecapitalfund
     ├── __init__.py
     ├── app.py
     ├── assets
+    │   ├── architecture.png
+    │   ├── cicd.png
+    │   ├── dots.ttf
     │   ├── favicon.ico
-    │   └── style.css
+    │   ├── style.css
+    │   └── temp.ttf
     ├── controller
     │   ├── callbacks.py
     │   ├── login.py
@@ -49,6 +54,9 @@ model-view-controller architecture:
     │   ├── members.py
     │   ├── prices.py
     │   └── transactions.py
+    ├── testing
+    │   ├── __init__.py
+    │   └── test_login.py
     └── view
         ├── layout.py
         └── plotting.py
