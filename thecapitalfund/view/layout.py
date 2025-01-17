@@ -10,7 +10,7 @@ DELTAS = prices.deltas()
 def format_delta(stock):
     increase = stock["today"] > stock["yesterday"]
     arrow = "▲" if increase else "▼"
-    color = "#398C1D" if increase else "#BF0417"
+    color = "#008000" if increase else "#BC0909"
     span = html.Span(f"{stock['symbol']} {stock['today']} {arrow} ", style={"color": color, "font-family": "dots"})
     return span
 
