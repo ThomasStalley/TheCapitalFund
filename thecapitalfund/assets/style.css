@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "temp";
+  src: url("temp.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "dots";
+  src: url("dots.ttf") format("truetype");
+}
+
 * {
   font-family: "Garamond";
   font-size: 18px;
@@ -31,11 +41,6 @@
 
 li {
   list-style-type: none
-}
-
-@font-face {
-    font-family: "temp";
-    src: url("temp.ttf") format("truetype");
 }
 
 .temp {
@@ -309,3 +314,23 @@ p, th, td {
     align-items: center;
 }
 
+@keyframes scrollText {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.scrolling-text {
+  font-family: "dots";   
+  display: inline-block;
+  animation: scrollText 2800s linear infinite;
+}
+
+#DeltaScreen {
+  border-radius: 0.25rem;
+  border: 1px solid #00000030;
+  overflow-x: hidden; 
+  overflow-y: hidden; 
+  white-space: nowrap;
+  display: flex;
+  height: 30px;         
+}
