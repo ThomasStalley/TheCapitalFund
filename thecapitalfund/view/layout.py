@@ -314,7 +314,7 @@ def get_layout() -> html.Div:
                         "This is a personal programming project, the goal being to create a production level, investment fund platform."
                     ),
                     html.P(
-                        "The app is updated daily, with real world financial data, sourced from an asset price api."
+                        "The app is updated daily, with real world financial data, sourced from my own asset price api."
                     ),
                     html.P(
                         " . . . ",
