@@ -16,7 +16,7 @@ def api_get_request(data_slug: str, data_key: str):
     request = requests.get(url=url, headers=headers)
     # check if the request was successful:
     if request.status_code != 200:
-        print(f"Request failed with status code: {request.status_code}")
+        print(f"Request for {data_key.lower()} data failed with status code: {request.status_code}")
         return None
     try:
         response = json.loads(request.text)

@@ -31,7 +31,9 @@
 
 .subtitle {
    font-size: 18px;
-   color: #BC0909;
+   font-family: "temp";
+   text-align: center;
+   font-weight: bold;
 }
 
 .popover-text {
@@ -50,6 +52,12 @@ li {
 .red-temp {
   font-family: "temp";
   color: #BD0404 !important;
+}
+
+.dotsrowcol {
+  font-family: "temp";
+  text-align: center;
+  font-size: 14px;
 }
 
 #AppContainer, {

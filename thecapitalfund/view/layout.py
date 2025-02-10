@@ -1,10 +1,8 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from thecapitalfund.model import prices
+from thecapitalfund.model import analysis, prices
 from thecapitalfund.view import plotting
-
-DELTAS = prices.deltas()
 
 
 def format_delta(stock):
@@ -18,6 +16,8 @@ def format_delta(stock):
 def get_layout() -> html.Div:
     """Construct and return app layout."""
     asset_data = prices.get_asset_data()
+    holdings_data = analysis.get_holdings_data()
+    sectors_data = analysis.get_sectors_data()
     today = prices.today()
     # construct tab layouts:
     _performance_tab = dbc.Container(
@@ -34,7 +34,7 @@ def get_layout() -> html.Div:
                                 dcc.Loading(
                                     children=dcc.Graph(
                                         id="TotalPlot",
-                                        figure=plotting.total(asset_data),
+                                        figure=plotting.get_total_figure(asset_data),
                                         config={"displayModeBar": False},
                                         style={"height": "500px"},
                                     ),
@@ -51,7 +51,7 @@ def get_layout() -> html.Div:
                                 html.Div(
                                     children=dcc.Graph(
                                         id="AssetsPlot",
-                                        figure=plotting.assets(asset_data),
+                                        figure=plotting.get_assets_figure(asset_data),
                                         config={"displayModeBar": False},
                                         style={"height": "350px"},
                                     )
@@ -63,8 +63,8 @@ def get_layout() -> html.Div:
             ),
         ],
     )
-    _fund_tab = dbc.Container(
-        id="FundTab",
+    _analysis_tab = dbc.Container(
+        id="AnalysisTab",
         children=[
             dbc.Row(
                 dbc.Col(
@@ -73,13 +73,13 @@ def get_layout() -> html.Div:
                             html.Thead(
                                 html.Tr(
                                     [
-                                        html.Th("Asset", id="asset-header", className="red-temp"),
-                                        html.Th("Code", id="code-header", className="red-temp"),
-                                        html.Th("Units", id="unit-header", className="red-temp"),
-                                        html.Th("Price", id="price-header", className="red-temp"),
-                                        html.Th("Day", id="daily-header", className="red-temp"),
-                                        html.Th("Week", id="weekly-header", className="red-temp"),
-                                        html.Th("All", id="all-time-header", className="red-temp"),
+                                        html.Th("Asset", id="asset-header", className="temp"),
+                                        html.Th("Code", id="code-header", className="temp"),
+                                        html.Th("Units", id="unit-header", className="temp"),
+                                        html.Th("Price", id="price-header", className="temp"),
+                                        html.Th("Day", id="daily-header", className="temp"),
+                                        html.Th("Week", id="weekly-header", className="temp"),
+                                        html.Th("All", id="all-time-header", className="temp"),
                                     ]
                                 )
                             ),
@@ -178,7 +178,7 @@ def get_layout() -> html.Div:
                                             html.Td(f"{today.get('day_percent_change_tcf')}%"),
                                             html.Td(f"{today.get('week_percent_change_tcf')}%"),
                                             html.Td(f"{today.get('all_time_percent_change_tcf')}%"),
-                                        ],
+                                        ]
                                     ),
                                     html.Tr(
                                         [
@@ -193,7 +193,7 @@ def get_layout() -> html.Div:
                                     ),
                                     html.Tr(
                                         [
-                                            html.Td("Bitcoin"),
+                                            html.Td("Bitcoin Crytocurrency"),
                                             html.Td("BTC-GBP"),
                                             html.Td("0.0014349"),
                                             html.Td(f"£{today.get('btc_price')}"),
@@ -204,7 +204,7 @@ def get_layout() -> html.Div:
                                     ),
                                     html.Tr(
                                         [
-                                            html.Td("Ether"),
+                                            html.Td("Ether Crytocurrency"),
                                             html.Td("ETH-GBP"),
                                             html.Td("0.0199347"),
                                             html.Td(f"£{today.get('eth_price')}"),
@@ -222,12 +222,55 @@ def get_layout() -> html.Div:
                 ),
                 justify="center",
             ),
+            html.P("Asset Distribution", className="subtitle", style={"transform": "translate(0, 20px)"}),
+            dbc.Row(
+                children=[
+                    dbc.Col(
+                        children=[
+                            dcc.Loading(
+                                type="circle",
+                                color="#000000",
+                                children=dcc.Graph(
+                                    id="HoldingsFig",
+                                    figure=plotting.get_holdings_fig(holdings_data),
+                                    config={"displayModeBar": False},
+                                    style={"height": "400px"},
+                                ),
+                            )
+                        ],
+                        width=10,
+                    )
+                ],
+                justify="center",
+            ),
+            html.P("Sector Distribution", className="subtitle", style={"transform": "translate(0, 20px)"}),
+            dbc.Row(
+                children=[
+                    dbc.Col(
+                        children=[
+                            dcc.Loading(
+                                type="circle",
+                                color="#000000",
+                                children=dcc.Graph(
+                                    id="SectorsFig",
+                                    figure=plotting.get_sectors_fig(sectors_data),
+                                    config={"displayModeBar": False},
+                                    style={"height": "400px"},
+                                ),
+                            )
+                        ],
+                        width=10,
+                    )
+                ],
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
         ],
     )
     _assets_tab = dbc.Container(
         id="AssetsTab",
         children=[
-            dbc.Row(dbc.Col(html.P("The Capital Fund", className="temp middle subtitle"))),
+            dbc.Row(dbc.Col(html.P("The Capital Fund", className="subtitle"))),
             dbc.Row(
                 dbc.Col(
                     [
@@ -242,7 +285,7 @@ def get_layout() -> html.Div:
                 ),
                 justify="center",
             ),
-            dbc.Row(dbc.Col(html.P("Vanguard ESG Developed World Index Fund", className="temp middle subtitle"))),
+            dbc.Row(dbc.Col(html.P("Vanguard ESG Developed World Index Fund", className="subtitle"))),
             dbc.Row(
                 dbc.Col(
                     [
@@ -258,11 +301,7 @@ def get_layout() -> html.Div:
                 ),
                 justify="center",
             ),
-            dbc.Row(
-                dbc.Col(
-                    html.P("Bitcoin", className="temp middle subtitle"),
-                ),
-            ),
+            dbc.Row(dbc.Col(html.P("Bitcoin", className="subtitle"))),
             dbc.Row(
                 dbc.Col(
                     [
@@ -280,11 +319,7 @@ def get_layout() -> html.Div:
                 ),
                 justify="center",
             ),
-            dbc.Row(
-                dbc.Col(
-                    html.P("Ether", className="temp middle subtitle"),
-                ),
-            ),
+            dbc.Row(dbc.Col(html.P("Ether", className="subtitle"))),
             dbc.Row(
                 dbc.Col(
                     [
@@ -308,6 +343,7 @@ def get_layout() -> html.Div:
     _about_tab = dbc.Container(
         id="AboutTab",
         children=[
+            html.P("The Project", className="subtitle"),
             dbc.Row(
                 children=[
                     html.P(
@@ -315,10 +351,6 @@ def get_layout() -> html.Div:
                     ),
                     html.P(
                         "The app is updated daily, with real world financial data, sourced from my own asset price api."
-                    ),
-                    html.P(
-                        " . . . ",
-                        className="temp",
                     ),
                     html.P(
                         [
@@ -331,10 +363,6 @@ def get_layout() -> html.Div:
                             ),
                             ".",
                         ]
-                    ),
-                    html.P(
-                        " . . . ",
-                        className="temp",
                     ),
                     html.P(
                         [
@@ -351,16 +379,37 @@ def get_layout() -> html.Div:
                 ],
                 className="ebg middle",
             ),
-        ],
-    )
-    # construct delta banner screen:
-    delta_screen = html.Div(
-        id="DeltaScreen",
-        children=[
-            html.Div(
-                className="scrolling-text",
-                children=[format_delta(d) for d in 200 * DELTAS],
-            )
+            html.P("Deployment", className="subtitle", style={"transform": "translate(0, 10px)"}),
+            dbc.Row(
+                dbc.Col(
+                    html.Img(
+                        src="/assets/cicd.png",
+                        style={
+                            "width": "89%",
+                            "display": "block",
+                            "margin": "0 auto",
+                        },
+                    ),
+                    width=12,
+                    className="text-center",
+                )
+            ),
+            html.P("Architecture", className="subtitle", style={"transform": "translate(0, 20px)"}),
+            dbc.Row(
+                dbc.Col(
+                    html.Img(
+                        src="/assets/architecture.png",
+                        style={
+                            "width": "90%",
+                            "display": "block",
+                            "margin": "0 auto",
+                        },
+                    ),
+                    width=12,
+                    className="text-center",
+                )
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
         ],
     )
     # construct main layout:
@@ -468,7 +517,15 @@ def get_layout() -> html.Div:
                         children=dbc.Col(
                             width=9,
                             children=[
-                                delta_screen,
+                                html.Div(
+                                    id="DeltaScreen",
+                                    children=[
+                                        html.Div(
+                                            className="scrolling-text",
+                                            children=[format_delta(d) for d in 200 * prices.deltas()],
+                                        )
+                                    ],
+                                ),
                             ],
                         ),
                     ),
@@ -489,8 +546,8 @@ def get_layout() -> html.Div:
                                                 tab_id="performance",
                                             ),
                                             dbc.Tab(
-                                                label="Holdings",
-                                                tab_id="fund",
+                                                label="Analysis",
+                                                tab_id="analysis",
                                             ),
                                             dbc.Tab(
                                                 label="Assets",
@@ -523,13 +580,7 @@ def get_layout() -> html.Div:
                                     html.Div(
                                         id="TabContentInner",
                                         children=[
-                                            html.P(
-                                                "spacer",
-                                                style={
-                                                    "font-size": "1px",
-                                                    "opacity": "0",
-                                                },
-                                            ),
+                                            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
                                             html.Div(
                                                 id="PerformanceContent",
                                                 children=_performance_tab,
@@ -538,8 +589,8 @@ def get_layout() -> html.Div:
                                                 },
                                             ),
                                             html.Div(
-                                                id="FundContent",
-                                                children=_fund_tab,
+                                                id="AnalysisContent",
+                                                children=_analysis_tab,
                                                 style={
                                                     "display": "none",
                                                 },

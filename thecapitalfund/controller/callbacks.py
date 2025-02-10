@@ -69,7 +69,7 @@ def _get_member_timeline(chosen_member: dict) -> list[float]:
 @dash.callback(
     Output("PerformanceContent", "style"),
     Output("AssetContent", "style"),
-    Output("FundContent", "style"),
+    Output("AnalysisContent", "style"),
     Output("AboutContent", "style"),
     Input("NavBarTabs", "active_tab"),
 )
@@ -79,7 +79,7 @@ def nav_bar_interaction(active_tab):
     visible = {"display": "block"}
     active_tab = active_tab or "performance"
     # delta screen is visible only when performance tab
-    contents = ["performance", "asset", "fund", "about"]
+    contents = ["performance", "asset", "analysis", "about"]
     return [visible if active_tab == content else hidden for content in contents]
 
 
@@ -218,5 +218,5 @@ def log_in_attempt(
         app_state.log_in_button_style = logged_out_login_button_style
     # dump model features to be used in app layout:
     updated_app_features = list(app_state.model_dump().values())
-    updated_app_features.insert(0, plotting.total(chart_data))
+    updated_app_features.insert(0, plotting.get_total_figure(chart_data))
     return updated_app_features
