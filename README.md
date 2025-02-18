@@ -38,27 +38,10 @@ model-view-controller architecture:
 └── thecapitalfund
     ├── __init__.py
     ├── app.py
-    ├── assets
-    │   ├── architecture.png
-    │   ├── cicd.png
-    │   ├── dots.ttf
-    │   ├── favicon.ico
-    │   ├── style.css
-    │   └── temp.ttf
-    ├── controller
-    │   ├── callbacks.py
-    │   ├── login.py
-    │   └── models.py
-    ├── model
-    │   ├── api.py
-    │   ├── members.py
-    │   ├── prices.py
-    │   └── transactions.py
-    ├── testing
-    │   ├── __init__.py
-    │   └── test_login.py
-    └── view
-        ├── layout.py
-        └── plotting.py
+    ├── assets/
+    ├── model/
+    ├── view/
+    ├── controller/
+    └── testing/
 ```
  
