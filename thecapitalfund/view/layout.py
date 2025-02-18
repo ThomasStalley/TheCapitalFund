@@ -6,18 +6,19 @@ from thecapitalfund.view import plotting
 
 
 def format_delta(stock):
-    increase = stock["today"] > stock["yesterday"]
-    arrow = "▲" if increase else "▼"
-    color = "#008000" if increase else "#BC0909"
+    price_increase = stock["today"] > stock["yesterday"]
+    arrow = "▲" if price_increase else "▼"
+    color = "#008000" if price_increase else "#BC0909"
     span = html.Span(f"{stock['symbol']} {stock['today']} {arrow} ", style={"color": color, "font-family": "dots"})
     return span
 
 
 def get_layout() -> html.Div:
-    """Construct and return app layout."""
+    # load in required datasets:
     asset_data = prices.get_asset_data()
     holdings_data = analysis.get_holdings_data()
     sectors_data = analysis.get_sectors_data()
+    countries_data = analysis.get_countries_data()
     today = prices.today()
     # construct tab layouts:
     _performance_tab = dbc.Container(
@@ -182,7 +183,7 @@ def get_layout() -> html.Div:
                                     ),
                                     html.Tr(
                                         [
-                                            html.Td("World Index Fund"),
+                                            html.Td("Developed World Index Fund"),
                                             html.Td("VAEIAGA"),
                                             html.Td("8.00"),
                                             html.Td(f"£{today.get('van_price')}"),
@@ -234,7 +235,7 @@ def get_layout() -> html.Div:
                                     id="HoldingsFig",
                                     figure=plotting.get_holdings_fig(holdings_data),
                                     config={"displayModeBar": False},
-                                    style={"height": "400px"},
+                                    style={"height": "300px"},
                                 ),
                             )
                         ],
@@ -255,7 +256,29 @@ def get_layout() -> html.Div:
                                     id="SectorsFig",
                                     figure=plotting.get_sectors_fig(sectors_data),
                                     config={"displayModeBar": False},
-                                    style={"height": "400px"},
+                                    style={"height": "300px"},
+                                ),
+                            )
+                        ],
+                        width=10,
+                    )
+                ],
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            html.P("Geographic Distribution", className="subtitle", style={"transform": "translate(0, 20px)"}),
+            dbc.Row(
+                children=[
+                    dbc.Col(
+                        children=[
+                            dcc.Loading(
+                                type="circle",
+                                color="#000000",
+                                children=dcc.Graph(
+                                    id="CountriesFig",
+                                    figure=plotting.get_countries_fig(countries_data),
+                                    config={"displayModeBar": False},
+                                    style={"height": "300px"},
                                 ),
                             )
                         ],
@@ -379,6 +402,7 @@ def get_layout() -> html.Div:
                 ],
                 className="ebg middle",
             ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             html.P("Deployment", className="subtitle", style={"transform": "translate(0, 10px)"}),
             dbc.Row(
                 dbc.Col(
@@ -394,6 +418,7 @@ def get_layout() -> html.Div:
                     className="text-center",
                 )
             ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             html.P("Architecture", className="subtitle", style={"transform": "translate(0, 20px)"}),
             dbc.Row(
                 dbc.Col(
@@ -412,7 +437,7 @@ def get_layout() -> html.Div:
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
         ],
     )
-    # construct main layout:
+    # construct complete app layout:
     layout = html.Div(
         id="AppContainer",
         style={"padding-top": "5px", "padding-bottom": "5px"},
