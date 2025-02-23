@@ -10,9 +10,9 @@ dot.node(
     "daily_update",
     """<
 <B>Daily Update @ 4:40AM</B><br/>
-• SQLite &amp; Pandas: Get new price data.<br/>
-• SQLite: Update members database.<br/>
-• SQLite &amp; Resend: Send update email.
+• Get latest news stories, upload to db.<br/>
+• Get latest price data, upload to db.<br/>
+• Update members database using previous day transactions.<br/>
 >""",
     shape="box",
     style="rounded",
@@ -28,7 +28,7 @@ dot.node(
 <B>Redeploy Backend @ 4:50AM</B><br/>
 • CI: Testing with pytest, linting with ruff.<br/>
 • CD: Upload latest docker image to AWS elastic container repository.<br/>
-• CD: Redeploy latest image as AWS elastic container service.
+• CD: Redeploy latest image as AWS elastic container service.<br/>
 >""",
     shape="box",
     style="rounded",
@@ -42,9 +42,9 @@ dot.node(
     "redeploy_frontend",
     """<
 <B>Redeploy Frontend @ 5:00AM</B><br/>
-• CI: Testing with pytest, linting with flake8.<br/>
+• CI: Testing with pytest, linting with ruff.<br/>
 • CD: Trigger redeploy via post request to Render webhook.<br/>
-• CD: Latest code redeployed on rRender.<br/>
+• CD: Latest code redeployed on Render.<br/>
 >""",
     shape="box",
     style="rounded",

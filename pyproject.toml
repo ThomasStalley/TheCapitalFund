@@ -19,6 +19,7 @@ pytest = "^8.3.3"
 python-dotenv = "^1.0.1"
 ruff = "^0.8.0"
 graphviz = "^0.20.3"
+pillow = "^11.1.0"
 
 [tool.poetry.group.dev.dependencies]
 deptry = "^0.16.1"

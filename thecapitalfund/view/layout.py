@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from thecapitalfund.model import analysis, prices
+from thecapitalfund.model import analysis, intel, prices
 from thecapitalfund.view import plotting
 
 
@@ -19,6 +19,8 @@ def get_layout() -> html.Div:
     holdings_data = analysis.get_holdings_data()
     sectors_data = analysis.get_sectors_data()
     countries_data = analysis.get_countries_data()
+    news_data = intel.get_news_data()
+    fangs_data = intel.get_fangs_data()
     today = prices.today()
     # construct tab layouts:
     _performance_tab = dbc.Container(
@@ -363,6 +365,77 @@ def get_layout() -> html.Div:
             ),
         ],
     )
+    _intel_tab = dbc.Container(
+        id="IntelTab",
+        children=[
+            dbc.Row(dbc.Col(html.P("Market Sentiments", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    id="SentimentPlottingContainer",
+                    children=[
+                        dcc.Graph(
+                            id="SentimentPlotting",
+                            figure=plotting.get_sentiments_fig(fangs_data),
+                            config={"displayModeBar": False},
+                            style={"height": "300px"},
+                        ),
+                    ],
+                    width=10,
+                ),
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            dbc.Row(dbc.Col(html.P("News Summaries", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    children=[
+                        html.P(
+                            "Today's curated news stories - headlines and summaries produced using GPT-4o mini.",
+                        ),
+                    ],
+                )
+            ),
+            dbc.Row(
+                dbc.Col(
+                    dbc.Table(
+                        [
+                            html.Tbody(
+                                [
+                                    html.Tr(
+                                        children=[
+                                            html.Td(
+                                                children=[
+                                                    html.B(
+                                                        html.A(
+                                                            news_row["TITLE"],
+                                                            href=news_row["LINK"],
+                                                            style={"color": "#BD0404"},
+                                                        ),
+                                                    ),
+                                                    html.Br(),
+                                                    news_row["SUMMARY"],
+                                                    html.Br(),
+                                                    html.Span(
+                                                        f"{news_row['ASSET']} accounts for {news_row['ASSET_PERCENTAGE']:.4f}% of The Capital Fund.",
+                                                        style={"color": "grey", "font-style": "italic"},
+                                                    ),
+                                                ],
+                                                style={"border-radius": "0.2rem"},
+                                            ),
+                                        ],
+                                    )
+                                    for news_row in news_data
+                                ]
+                            ),
+                        ],
+                        striped=True,
+                    ),
+                    width=10,
+                ),
+                justify="center",
+            ),
+        ],
+    )
     _about_tab = dbc.Container(
         id="AboutTab",
         children=[
@@ -579,6 +652,10 @@ def get_layout() -> html.Div:
                                                 tab_id="asset",
                                             ),
                                             dbc.Tab(
+                                                label="Intel",
+                                                tab_id="intel",
+                                            ),
+                                            dbc.Tab(
                                                 label="About",
                                                 tab_id="about",
                                             ),
@@ -623,6 +700,13 @@ def get_layout() -> html.Div:
                                             html.Div(
                                                 id="AssetContent",
                                                 children=_assets_tab,
+                                                style={
+                                                    "display": "none",
+                                                },
+                                            ),
+                                            html.Div(
+                                                id="IntelContent",
+                                                children=_intel_tab,
                                                 style={
                                                     "display": "none",
                                                 },
