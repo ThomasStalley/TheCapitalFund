@@ -345,8 +345,11 @@ def get_layout() -> html.Div:
                             "We establish three simple baseline methods that involve regular deposits — daily, weekly, and monthly — and then calculate the normalized returns for each."
                         ),
                         html.P(
-                            "Additionally, we implement five machine learning techniques. For these methods, we invest today if a model predicts with at least 70% confidence that the fund's price will increase tomorrow. "
-                            "Models are trained using fund asset prices from 2020 to 2022, and evaluated on data from 2023 onward. Given the project's objective, we aim to maximize precision (correctly predicting price increases) so each deposit precedes an actual price increase."
+                            "Additionally, we implement five machine learning techniques. For these methods, we invest today if a model predicts that the fund's price will increase tomorrow. "
+                            "Models are trained using fund asset prices from 2020 to 2022, with investment simulation and model evaluation using price data from 1st Jan 2023 onward."
+                        ),
+                        html.P(
+                            "Given the project's objective, we aim to maximize precision (correctly predicting price increases) so each deposit precedes an actual price increase."
                         ),
                     ],
                     width=10,
@@ -435,37 +438,41 @@ def get_layout() -> html.Div:
         children=[
             html.P("The Project", className="subtitle"),
             dbc.Row(
-                children=[
-                    html.P(
-                        "This is a personal programming project, the goal being to create a production level, investment fund platform."
-                    ),
-                    html.P("The app is updated daily, with real world financial data, sourced from my own api."),
-                    html.P(
-                        [
-                            "See the source code in github: ",
-                            html.A(
-                                "github.com/thomasstalley/thecapitalfund",
-                                href="https://github.com/thomasstalley/thecapitalfund",
-                                target="_blank",
-                                style={"color": "#000000"},
-                            ),
-                            ".",
-                        ]
-                    ),
-                    html.P(
-                        [
-                            "Built with dash, by plotly: ",
-                            html.A(
-                                "dash.plotly.com",
-                                href="https://dash.plotly.com/",
-                                target="_blank",
-                                style={"color": "#000000"},
-                            ),
-                            ".",
-                        ]
-                    ),
-                ],
+                dbc.Col(
+                    children=[
+                        html.P(
+                            "This is a personal programming project, the goal being to create a production level, investment fund platform."
+                        ),
+                        html.P("The app is updated daily, with real world financial data, sourced from my own api."),
+                        html.P(
+                            [
+                                "See the source code in github: ",
+                                html.A(
+                                    "github.com/thomasstalley/thecapitalfund",
+                                    href="https://github.com/thomasstalley/thecapitalfund",
+                                    target="_blank",
+                                    style={"color": "#000000"},
+                                ),
+                                ".",
+                            ]
+                        ),
+                        html.P(
+                            [
+                                "Built with dash, by plotly: ",
+                                html.A(
+                                    "dash.plotly.com",
+                                    href="https://dash.plotly.com/",
+                                    target="_blank",
+                                    style={"color": "#000000"},
+                                ),
+                                ".",
+                            ],
+                        ),
+                    ],
+                    width=10,
+                ),
                 className="ebg middle",
+                justify="center",
             ),
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             html.P("Deployment", className="subtitle", style={"transform": "translate(0, 10px)"}),
