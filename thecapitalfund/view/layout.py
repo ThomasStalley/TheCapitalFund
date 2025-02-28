@@ -354,43 +354,6 @@ def get_layout() -> html.Div:
                 justify="center",
             ),
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
-            dbc.Row(dbc.Col(html.P("Model Metrics", className="subtitle"))),
-            dbc.Row(
-                dbc.Col(
-                    dbc.Table(
-                        [
-                            html.Thead(
-                                html.Tr(
-                                    [
-                                        html.Th("Model", className="header"),
-                                        html.Th("Precision", className="header"),
-                                        html.Th("Recall", className="header"),
-                                        html.Th("F1", className="header"),
-                                    ]
-                                )
-                            ),
-                            html.Tbody(
-                                [
-                                    html.Tr(
-                                        [
-                                            html.Th(model["model"], className="normal"),
-                                            html.Th(model["precision"], className="normal"),
-                                            html.Th(model["recall"], className="normal"),
-                                            html.Th(model["f1"], className="normal"),
-                                        ]
-                                    )
-                                    for model in models_data
-                                ]
-                            ),
-                        ],
-                        className="equal-width-table",
-                        striped=True,
-                    ),
-                    width=10,
-                ),
-                justify="center",
-            ),
-            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             dbc.Row(dbc.Col(html.P("Investing Methods", className="subtitle"))),
             dbc.Row(
                 dbc.Col(
@@ -417,6 +380,43 @@ def get_layout() -> html.Div:
                                         ]
                                     )
                                     for method in metrics_data
+                                ]
+                            ),
+                        ],
+                        className="equal-width-table",
+                        striped=True,
+                    ),
+                    width=10,
+                ),
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            dbc.Row(dbc.Col(html.P("Model Metrics", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    dbc.Table(
+                        [
+                            html.Thead(
+                                html.Tr(
+                                    [
+                                        html.Th("Model", className="header"),
+                                        html.Th("Precision", className="header"),
+                                        html.Th("Recall", className="header"),
+                                        html.Th("F1", className="header"),
+                                    ]
+                                )
+                            ),
+                            html.Tbody(
+                                [
+                                    html.Tr(
+                                        [
+                                            html.Th(model["model"], className="normal"),
+                                            html.Th(model["precision"], className="normal"),
+                                            html.Th(model["recall"], className="normal"),
+                                            html.Th(model["f1"], className="normal"),
+                                        ]
+                                    )
+                                    for model in models_data
                                 ]
                             ),
                         ],
@@ -512,88 +512,6 @@ def get_layout() -> html.Div:
             dcc.Store(id="active_tab_store", data={"active_tab": "performance"}),
             html.Div(
                 children=[
-                    dbc.Modal(
-                        id="ModalLogin",
-                        size="sm",
-                        backdrop=True,
-                        is_open=False,
-                        fade=True,
-                        children=[
-                            dbc.ModalHeader(
-                                id="ModalHeader",
-                                close_button=False,
-                                style={"display": "flex", "flexDirection": "column", "alignItems": "center"},
-                                children=[
-                                    html.P("Log In", id="ModalHeaderText"),
-                                    html.P(
-                                        "example username: EXAMPLE", id="HeaderTwoValueText", style={"display": "none"}
-                                    ),
-                                    html.P(
-                                        "example password: 112233", id="HeaderThrValueText", style={"display": "none"}
-                                    ),
-                                ],
-                            ),
-                            dcc.Loading(
-                                type="circle",
-                                color="#000000",
-                                children=[
-                                    dbc.ModalBody(
-                                        children=[
-                                            html.Div(
-                                                id="UserIdOuter",
-                                                children=[
-                                                    dcc.Input(
-                                                        id="UserIdInput",
-                                                        type="text",
-                                                        value="",
-                                                        placeholder="Username: 'EXAMPLE'",
-                                                    ),
-                                                ],
-                                            ),
-                                            html.Div(
-                                                id="UserPasswordOuter",
-                                                children=[
-                                                    dcc.Input(
-                                                        id="UserPasswordInput",
-                                                        type="password",
-                                                        value="",
-                                                        placeholder="Password: 'PASSWRD'",
-                                                    ),
-                                                ],
-                                            ),
-                                        ]
-                                    ),
-                                ],
-                            ),
-                            dbc.ModalFooter(
-                                id="ModalFooter",
-                                children=dbc.Row(
-                                    [
-                                        dbc.Col(
-                                            dbc.Button(
-                                                "↺",
-                                                id="FooterHomeButton",
-                                                n_clicks=0,
-                                                className="temp btn btn-primary",
-                                            ),
-                                            width=6,
-                                        ),
-                                        dbc.Col(
-                                            dbc.Button(
-                                                "→",
-                                                id="FooterLoginButton",
-                                                n_clicks=0,
-                                                className="temp btn btn-primary3",
-                                            ),
-                                            width=6,
-                                        ),
-                                    ],
-                                    justify="around",
-                                    align="center",
-                                ),
-                            ),
-                        ],
-                    ),
                     html.P(
                         id="AppTitle",
                         className="temp middle title",
@@ -650,12 +568,6 @@ def get_layout() -> html.Div:
                                             dbc.Tab(
                                                 label="About",
                                                 tab_id="about",
-                                            ),
-                                            dbc.Tab(
-                                                label="Log In",
-                                                tab_id="login",
-                                                id="OpenModalLogin",
-                                                label_style={},
                                             ),
                                         ],
                                     )

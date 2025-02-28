@@ -72,13 +72,6 @@ p, th, td {
   text-align: center;
 }
 
-.login-tab {
-    display: none;
-}
-.login-tab.active {
-    display: block;
-}
-
 #PerformanceBar {
   width: 100%;
   border-radius: 0.25rem;
@@ -88,23 +81,6 @@ p, th, td {
 
 #PerformanceBar button {
   font-size: 14px;
-}
-
-#OpenModalLogin {
-  color: #000;
-  background-color: #fff;
-  font-size: 16px;
-  font-family: "temp";
-}
-
-#ModalLogin {
-  top: 165px;
-}
-
-#ModalHeaderText {
-  margin: 5px 0;
-  font-size: 30px;
-  font-family: "temp";
 }
 
 #UserIdInput, #UserPasswordInput {
@@ -162,32 +138,6 @@ p, th, td {
   background: #FFF;
   position: relative;
   left: -168px;
-}
-
-#FooterLoginButton {
-  color: black;
-  font-size: 18px;
-  font-family: "temp";
-  border: 1px solid #00000030;
-  background: #FFF;
-}
-
-#FooterHomeButton:active {
-  color: #BD0404;
-  font-size: 18px;
-  font-family: "temp";
-  border: 1px solid #BD0404;
-  background: white;
-  position: relative;
-  left: -168px;
-}
-
-#FooterLoginButton:active {
-  color: #BD0404;
-  font-size: 18px;
-  font-family: "temp";
-  border: 1px solid #BD0404;
-  background: white;
 }
 
 ._dash-loading {
