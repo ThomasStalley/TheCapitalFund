@@ -3,8 +3,7 @@ digraph cicd {
 <B>Daily Update @ 4:40AM</B><br/>
 • Get latest news stories, upload to db.<br/>
 • Get latest price data, upload to db.<br/>
-• Update members database using latest transactions.<br/>
-• Send update email.
+• Update members database using previous day transactions.<br/>
 > fixedsize=true fontname=Serif height=1 shape=box style=rounded width=5.8]
 	redeploy_backend [label=<
 <B>Redeploy Backend @ 4:50AM</B><br/>
@@ -16,7 +15,7 @@ digraph cicd {
 <B>Redeploy Frontend @ 5:00AM</B><br/>
 • CI: Testing with pytest, linting with ruff.<br/>
 • CD: Trigger redeploy via post request to Render webhook.<br/>
-• CD: Latest code redeployed on rRender.<br/>
+• CD: Latest code redeployed on Render.<br/>
 > fixedsize=true fontname=Serif height=1 shape=box style=rounded width=5.8]
 	daily_update -> redeploy_backend
 	redeploy_backend -> redeploy_frontend

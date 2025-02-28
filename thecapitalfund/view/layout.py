@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from thecapitalfund.model import analysis, intel, prices
+from thecapitalfund.model import analysis, intel, prices, research
 from thecapitalfund.view import plotting
 
 
@@ -20,7 +20,9 @@ def get_layout() -> html.Div:
     sectors_data = analysis.get_sectors_data()
     countries_data = analysis.get_countries_data()
     news_data = intel.get_news_data()
-    fangs_data = intel.get_fangs_data()
+    sentiments_data = intel.get_sentiments_data()
+    models_data = research.get_models_data()
+    metrics_data = research.get_metrics_data()
     today = prices.today()
     # construct tab layouts:
     _performance_tab = dbc.Container(
@@ -30,6 +32,7 @@ def get_layout() -> html.Div:
             dbc.Row(
                 id="PlottingContainer",
                 children=[
+                    dbc.Row(dbc.Col([html.P("Fund Performance", className="subtitle")], width=10), justify="center"),
                     dbc.Row(
                         dbc.Col(
                             id="TotalPlottingContainer",
@@ -47,6 +50,7 @@ def get_layout() -> html.Div:
                             ],
                         ),
                     ),
+                    dbc.Row(dbc.Col([html.P("Asset Performance", className="subtitle")], width=10), justify="center"),
                     dbc.Row(
                         dbc.Col(
                             id="AssetsPlottingContainer",
@@ -62,6 +66,7 @@ def get_layout() -> html.Div:
                             ],
                         ),
                     ),
+                    dbc.Row(dbc.Col(html.P("spacer", style={"font-size": "2px", "opacity": "0"}))),
                 ],
             ),
         ],
@@ -69,6 +74,7 @@ def get_layout() -> html.Div:
     _analysis_tab = dbc.Container(
         id="AnalysisTab",
         children=[
+            html.P("The Fund", className="subtitle"),
             dbc.Row(
                 dbc.Col(
                     dbc.Table(
@@ -76,118 +82,61 @@ def get_layout() -> html.Div:
                             html.Thead(
                                 html.Tr(
                                     [
-                                        html.Th("Asset", id="asset-header", className="temp"),
-                                        html.Th("Code", id="code-header", className="temp"),
-                                        html.Th("Units", id="unit-header", className="temp"),
-                                        html.Th("Price", id="price-header", className="temp"),
-                                        html.Th("Day", id="daily-header", className="temp"),
-                                        html.Th("Week", id="weekly-header", className="temp"),
-                                        html.Th("All", id="all-time-header", className="temp"),
+                                        html.Th("Asset", id="asset-header-top", className="header"),
+                                        html.Th("Price", id="price-header-top", className="header"),
+                                        html.Th("Day", id="daily-header-top", className="header"),
+                                        html.Th("Week", id="weekly-heade-topr", className="header"),
+                                        html.Th("All", id="all-time-header-top", className="header"),
                                     ]
                                 )
-                            ),
-                            dbc.Popover(
-                                [
-                                    dbc.PopoverBody(
-                                        "Financial assets comprising The Capital Fund.",
-                                        className="popover-text",
-                                    )
-                                ],
-                                id="asset-popover",
-                                target="asset-header",
-                                trigger="hover",
-                                className="table-header-popover",
-                            ),
-                            dbc.Popover(
-                                [
-                                    dbc.PopoverBody(
-                                        "Financial asset code.",
-                                        className="popover-text",
-                                    ),
-                                ],
-                                id="code-popover",
-                                target="code-header",
-                                trigger="hover",
-                                className="table-header-popover popover-text",
-                            ),
-                            dbc.Popover(
-                                [
-                                    dbc.PopoverBody(
-                                        "Amount of the financial asset held in 1 unit of The Capital Fund.",
-                                        className="popover-text",
-                                    ),
-                                ],
-                                id="unit-popover",
-                                target="unit-header",
-                                trigger="hover",
-                                className="table-header-popover popover-text",
-                            ),
-                            dbc.Popover(
-                                [
-                                    dbc.PopoverBody(
-                                        "Price is from previous market day close.",
-                                        className="popover-text",
-                                    ),
-                                ],
-                                id="price-popover",
-                                target="price-header",
-                                trigger="hover",
-                                className="table-header-popover popover-text",
-                            ),
-                            dbc.Popover(
-                                [
-                                    dbc.PopoverBody(
-                                        "Daily percentage change in price.",
-                                        className="popover-text",
-                                    ),
-                                ],
-                                id="daily-popover",
-                                target="daily-header",
-                                trigger="hover",
-                                className="table-header-popover popover-text",
-                            ),
-                            dbc.Popover(
-                                [
-                                    dbc.PopoverBody(
-                                        "Weekly percentage change in price.",
-                                        className="popover-text",
-                                    ),
-                                ],
-                                id="weekly-popover",
-                                target="weekly-header",
-                                trigger="hover",
-                                className="table-header-popover popover-text",
-                            ),
-                            dbc.Popover(
-                                [
-                                    dbc.PopoverBody(
-                                        "Percentage change in price since fund opening.",
-                                        className="popover-text",
-                                    ),
-                                ],
-                                id="all-time-popover",
-                                target="all-time-header",
-                                trigger="hover",
-                                className="table-header-popover popover-text",
                             ),
                             html.Tbody(
                                 [
                                     html.Tr(
                                         [
-                                            html.Td("The Capital Fund"),
                                             html.Td("TCF-GBP"),
-                                            html.Td("1.00"),
                                             html.Td(f"£{today.get('tcf_price')}"),
                                             html.Td(f"{today.get('day_percent_change_tcf')}%"),
                                             html.Td(f"{today.get('week_percent_change_tcf')}%"),
                                             html.Td(f"{today.get('all_time_percent_change_tcf')}%"),
                                         ]
                                     ),
+                                ]
+                            ),
+                        ],
+                        className="equal-width-table",
+                        striped=True,
+                    ),
+                    width=10,
+                ),
+                justify="center",
+            ),
+            html.P("The Assets", className="subtitle", style={"transform": "translate(0, 20px)"}),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            dbc.Row(
+                dbc.Col(
+                    dbc.Table(
+                        [
+                            html.Thead(
+                                html.Tr(
+                                    [
+                                        html.Th("Asset", id="asset-header", className="header"),
+                                        html.Th("Units", id="unit-header", className="header"),
+                                        html.Th("Percentage", id="percentage-header", className="header"),
+                                        html.Th("Price", id="price-header", className="header"),
+                                        html.Th("Day", id="daily-header", className="header"),
+                                        html.Th("Week", id="weekly-header", className="header"),
+                                        html.Th("All", id="all-time-header", className="header"),
+                                    ]
+                                )
+                            ),
+                            html.Tbody(
+                                [
                                     html.Tr(
                                         [
-                                            html.Td("Developed World Index Fund"),
                                             html.Td("VAEIAGA"),
                                             html.Td("8.00"),
+                                            html.Td(f"{today.get('van_percentage')}%"),
                                             html.Td(f"£{today.get('van_price')}"),
                                             html.Td(f"{today.get('day_percent_change_van')}%"),
                                             html.Td(f"{today.get('week_percent_change_van')}%"),
@@ -196,9 +145,9 @@ def get_layout() -> html.Div:
                                     ),
                                     html.Tr(
                                         [
-                                            html.Td("Bitcoin Crytocurrency"),
                                             html.Td("BTC-GBP"),
                                             html.Td("0.0014349"),
+                                            html.Td(f"{today.get('btc_percentage')}%"),
                                             html.Td(f"£{today.get('btc_price')}"),
                                             html.Td(f"{today.get('day_percent_change_btc')}%"),
                                             html.Td(f"{today.get('week_percent_change_btc')}%"),
@@ -207,9 +156,9 @@ def get_layout() -> html.Div:
                                     ),
                                     html.Tr(
                                         [
-                                            html.Td("Ether Crytocurrency"),
                                             html.Td("ETH-GBP"),
                                             html.Td("0.0199347"),
+                                            html.Td(f"{today.get('eth_percentage')}%"),
                                             html.Td(f"£{today.get('eth_price')}"),
                                             html.Td(f"{today.get('day_percent_change_eth')}%"),
                                             html.Td(f"{today.get('week_percent_change_eth')}%"),
@@ -220,6 +169,7 @@ def get_layout() -> html.Div:
                             ),
                         ],
                         className="equal-width-table",
+                        striped=True,
                     ),
                     width=10,
                 ),
@@ -246,6 +196,7 @@ def get_layout() -> html.Div:
                 ],
                 justify="center",
             ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             html.P("Sector Distribution", className="subtitle", style={"transform": "translate(0, 20px)"}),
             dbc.Row(
                 children=[
@@ -292,90 +243,34 @@ def get_layout() -> html.Div:
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
         ],
     )
-    _assets_tab = dbc.Container(
-        id="AssetsTab",
-        children=[
-            dbc.Row(dbc.Col(html.P("The Capital Fund", className="subtitle"))),
-            dbc.Row(
-                dbc.Col(
-                    [
-                        html.P(
-                            "The Capital Fund is a mixed asset investment fund. The Capital Fund integrates the "
-                            "stability and ethical considerations of the Vanguard ESG Developed World All Cap Equity Index "
-                            "Fund with the innovative potential of the cryptocurrencies Bitcoin and Ether. The Capital Fund "
-                            "is defined by its one and only core value - optimism."
-                        ),
-                    ],
-                    width=10,
-                ),
-                justify="center",
-            ),
-            dbc.Row(dbc.Col(html.P("Vanguard ESG Developed World Index Fund", className="subtitle"))),
-            dbc.Row(
-                dbc.Col(
-                    [
-                        html.P(
-                            "The Vanguard ESG Developed World All Cap Equity Index Fund is a mutual fund that aims to provide l"
-                            "ong-term growth by tracking the performance of the FTSE Developed All Cap Choice Index. This index"
-                            " reflects the performance of stocks from developed countries worldwide, excluding companies involv"
-                            "ed in non-renewable energy, weapons, vice products, and other activities deemed not to meet certai"
-                            "n environmental, social, and governance (ESG) criteria."
-                        ),
-                    ],
-                    width=10,
-                ),
-                justify="center",
-            ),
-            dbc.Row(dbc.Col(html.P("Bitcoin", className="subtitle"))),
-            dbc.Row(
-                dbc.Col(
-                    [
-                        html.P(
-                            "Bitcoin (BTC) is the first and most well-known cryptocurrency, founded in 2009 by an individual or"
-                            " group of individuals operating under the pseudonym Satoshi Nakamoto. It is a decentralized digita"
-                            "l currency that allows for peer-to-peer transactions across a global network without the need for "
-                            "intermediaries such as banks or governments. Bitcoin operates on a blockchain, a distributed ledge"
-                            "r technology that records all transactions across a network of computers to ensure security and tr"
-                            "ansparency. Bitcoin's supply is capped at 21 million coins, a feature that aims to mimic th"
-                            "e scarcity and value of precious metals and to prevent inflation."
-                        ),
-                    ],
-                    width=10,
-                ),
-                justify="center",
-            ),
-            dbc.Row(dbc.Col(html.P("Ether", className="subtitle"))),
-            dbc.Row(
-                dbc.Col(
-                    [
-                        html.P(
-                            "Ether (ETH) is the native cryptocurrency of the Ethereum platform, which is a decentralized, open-"
-                            "source blockchain system. Ethereum was proposed in late 2013 by programmer Vitalik Buterin and dev"
-                            "elopment was crowdfunded in 2014, and the network went live on 30 July 2015. ETH serves as a mediu"
-                            "m of exchange and a store of value, but it is also used to compensate participant nodes for comput"
-                            "ations performed. Unlike Bitcoin, Ethereum is designed to be more than a payment system; it is a p"
-                            "latform for building decentralized applications (dApps) using smart contracts, which are self-exec"
-                            "uting contracts with the terms of the agreement between buyer and seller directly written into lin"
-                            "es of code."
-                        ),
-                    ],
-                    width=10,
-                ),
-                justify="center",
-            ),
-        ],
-    )
     _intel_tab = dbc.Container(
         id="IntelTab",
         children=[
-            dbc.Row(dbc.Col(html.P("Market Sentiments", className="subtitle"))),
+            dbc.Row(dbc.Col(html.P("Asset Sentiments", className="subtitle"))),
             dbc.Row(
                 dbc.Col(
-                    id="SentimentPlottingContainer",
+                    id="Sentimentsontainer",
                     children=[
                         dcc.Graph(
-                            id="SentimentPlotting",
-                            figure=plotting.get_sentiments_fig(fangs_data),
+                            id="SentimentsPlotting",
+                            figure=plotting.get_sentiments_fig(sentiments_data),
+                            config={"displayModeBar": False},
+                            style={"height": "300px"},
+                        ),
+                    ],
+                    width=10,
+                ),
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            dbc.Row(dbc.Col(html.P("Market Fear And Greed", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    id="FangPlottingContainer",
+                    children=[
+                        dcc.Graph(
+                            id="FangsPlotting",
+                            figure=plotting.get_fangs_fig(sentiments_data),
                             config={"displayModeBar": False},
                             style={"height": "300px"},
                         ),
@@ -436,6 +331,105 @@ def get_layout() -> html.Div:
             ),
         ],
     )
+    _research_tab = dbc.Container(
+        id="ResearchTab",
+        children=[
+            dbc.Row(dbc.Col(html.P("Research", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    children=[
+                        html.P(
+                            "Here we investigate various investment strategies, focusing specifically on when and how frequently to invest, aiming to maximize returns per pound invested."
+                        ),
+                        html.P(
+                            "We establish three simple baseline methods that involve regular deposits — daily, weekly, and monthly — and then calculate the normalized returns for each."
+                        ),
+                        html.P(
+                            "Additionally, we implement five machine learning techniques. For these methods, we invest today if a model predicts with at least 70% confidence that the fund's price will increase tomorrow. "
+                            "Models are trained using fund asset prices from 2020 to 2022, and evaluated on data from 2023 onward. Given the project's objective, we aim to maximize precision (correctly predicting price increases) so each deposit precedes an actual price increase."
+                        ),
+                    ],
+                    width=10,
+                ),
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            dbc.Row(dbc.Col(html.P("Model Metrics", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    dbc.Table(
+                        [
+                            html.Thead(
+                                html.Tr(
+                                    [
+                                        html.Th("Model", className="header"),
+                                        html.Th("Precision", className="header"),
+                                        html.Th("Recall", className="header"),
+                                        html.Th("F1", className="header"),
+                                    ]
+                                )
+                            ),
+                            html.Tbody(
+                                [
+                                    html.Tr(
+                                        [
+                                            html.Th(model["model"], className="normal"),
+                                            html.Th(model["precision"], className="normal"),
+                                            html.Th(model["recall"], className="normal"),
+                                            html.Th(model["f1"], className="normal"),
+                                        ]
+                                    )
+                                    for model in models_data
+                                ]
+                            ),
+                        ],
+                        className="equal-width-table",
+                        striped=True,
+                    ),
+                    width=10,
+                ),
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            dbc.Row(dbc.Col(html.P("Investing Methods", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    dbc.Table(
+                        [
+                            html.Thead(
+                                html.Tr(
+                                    [
+                                        html.Th("Investment Method", className="header"),
+                                        html.Th("Pounds Invested", className="header"),
+                                        html.Th("Investments Made", className="header"),
+                                        html.Th("Return Per Pound Invested", className="header"),
+                                    ]
+                                )
+                            ),
+                            html.Tbody(
+                                [
+                                    html.Tr(
+                                        [
+                                            html.Th(method["model"], className="normal"),
+                                            html.Th(f'£{method["invested"]}', className="normal"),
+                                            html.Th(method["n_investments"], className="normal"),
+                                            html.Th(f'£{method["rpp"]}', className="normal"),
+                                        ]
+                                    )
+                                    for method in metrics_data
+                                ]
+                            ),
+                        ],
+                        className="equal-width-table",
+                        striped=True,
+                    ),
+                    width=10,
+                ),
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+        ],
+    )
     _about_tab = dbc.Container(
         id="AboutTab",
         children=[
@@ -445,9 +439,7 @@ def get_layout() -> html.Div:
                     html.P(
                         "This is a personal programming project, the goal being to create a production level, investment fund platform."
                     ),
-                    html.P(
-                        "The app is updated daily, with real world financial data, sourced from my own asset price api."
-                    ),
+                    html.P("The app is updated daily, with real world financial data, sourced from my own api."),
                     html.P(
                         [
                             "See the source code in github: ",
@@ -455,7 +447,7 @@ def get_layout() -> html.Div:
                                 "github.com/thomasstalley/thecapitalfund",
                                 href="https://github.com/thomasstalley/thecapitalfund",
                                 target="_blank",
-                                style={"color": "#BD0404"},
+                                style={"color": "#000000"},
                             ),
                             ".",
                         ]
@@ -467,7 +459,7 @@ def get_layout() -> html.Div:
                                 "dash.plotly.com",
                                 href="https://dash.plotly.com/",
                                 target="_blank",
-                                style={"color": "#BD0404"},
+                                style={"color": "#000000"},
                             ),
                             ".",
                         ]
@@ -648,12 +640,12 @@ def get_layout() -> html.Div:
                                                 tab_id="analysis",
                                             ),
                                             dbc.Tab(
-                                                label="Assets",
-                                                tab_id="asset",
-                                            ),
-                                            dbc.Tab(
                                                 label="Intel",
                                                 tab_id="intel",
+                                            ),
+                                            dbc.Tab(
+                                                label="Research",
+                                                tab_id="research",
                                             ),
                                             dbc.Tab(
                                                 label="About",
@@ -698,15 +690,15 @@ def get_layout() -> html.Div:
                                                 },
                                             ),
                                             html.Div(
-                                                id="AssetContent",
-                                                children=_assets_tab,
+                                                id="IntelContent",
+                                                children=_intel_tab,
                                                 style={
                                                     "display": "none",
                                                 },
                                             ),
                                             html.Div(
-                                                id="IntelContent",
-                                                children=_intel_tab,
+                                                id="ResearchContent",
+                                                children=_research_tab,
                                                 style={
                                                     "display": "none",
                                                 },

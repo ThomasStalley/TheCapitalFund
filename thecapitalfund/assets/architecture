@@ -6,8 +6,8 @@ digraph architecture {
 	}
 	subgraph cluster_hosting {
 		color=black label=<<I>Deployment</I>> labeljust=r labelloc=b style=rounded
-		hosting_backend [label=<<B>AWS Elastic Container Service</B><br/>Latest image deployed as an 'always-on' container service @ capitalapi.auchester.com> color=black fontname=Serif height=1.0 shape=box style="rounded,dashed" width=7]
-		hosting_frontend [label=<<B>Render Web Service</B><br/>Latest image deployed as an 'on-demand' container service @ thecapitalfund.onrender.com> color=black fontname=Serif height=1.0 shape=box style="rounded,dashed" width=7]
+		hosting_backend [label=<<B>AWS Elastic Container Service</B><br/>Latest image deployed as an 'always-on' container service.<br/>Hosted @ capitalapi.auchester.com> color=black fontname=Serif height=1.0 shape=box style="rounded,dashed" width=7]
+		hosting_frontend [label=<<B>Render Web Service</B><br/>Latest image deployed as an 'on-demand' container service.<br/>Hosted @ thecapitalfund.onrender.com> color=black fontname=Serif height=1.0 shape=box style="rounded,dashed" width=7]
 	}
 	backend -> hosting_backend [arrowhead=normal color=black style=dotted]
 	frontend -> hosting_frontend [arrowhead=normal color=black style=dotted]

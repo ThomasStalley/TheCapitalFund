@@ -41,7 +41,7 @@ with dot.subgraph(name="cluster_hosting") as hosting:
     )
     hosting.node(
         name="hosting_backend",
-        label="""<<B>AWS Elastic Container Service</B><br/>Latest image deployed as an 'always-on' container service @ capitalapi.auchester.com>""",
+        label="""<<B>AWS Elastic Container Service</B><br/>Latest image deployed as an 'always-on' container service.<br/>Hosted @ capitalapi.auchester.com>""",
         shape="box",
         style="rounded,dashed",
         color="black",
@@ -51,7 +51,7 @@ with dot.subgraph(name="cluster_hosting") as hosting:
     )
     hosting.node(
         name="hosting_frontend",
-        label="""<<B>Render Web Service</B><br/>Latest image deployed as an 'on-demand' container service @ thecapitalfund.onrender.com>""",
+        label="""<<B>Render Web Service</B><br/>Latest image deployed as an 'on-demand' container service.<br/>Hosted @ thecapitalfund.onrender.com>""",
         shape="box",
         style="rounded,dashed",
         color="black",

@@ -32,6 +32,20 @@ def get_yesterday_price(asset: str) -> float:
     return price
 
 
+def get_percentage(asset: str) -> float:
+    """Get today's percentage (of fund) of chosen asset."""
+    data_dict = get_asset_data()
+    tcf_price_today = data_dict["ACF"][-1]
+    if asset == "VAN":
+        percentage = 100 * (data_dict["VAN"][-1] * 8 / tcf_price_today)
+    elif asset == "BTC":
+        percentage = 100 * (data_dict["BTC"][-1] * 0.0014349 / tcf_price_today)
+    elif asset == "ETH":
+        percentage = 100 * (data_dict["ETH"][-1] * 0.0199347 / tcf_price_today)
+    percentage = round(percentage, 2)
+    return percentage
+
+
 def day_percent_change(asset: str) -> str:
     """Get percentage change in asset price between today and one day prior."""
     data_dict = get_asset_data()
@@ -71,6 +85,9 @@ def today() -> dict:
         "van_price": get_price("VAN"),
         "btc_price": get_price("BTC"),
         "eth_price": get_price("ETH"),
+        "van_percentage": get_percentage("VAN"),
+        "btc_percentage": get_percentage("BTC"),
+        "eth_percentage": get_percentage("ETH"),
         "day_percent_change_tcf": day_percent_change("ACF"),
         "week_percent_change_tcf": week_percent_change("ACF"),
         "all_time_percent_change_tcf": all_time_percent_change("ACF"),

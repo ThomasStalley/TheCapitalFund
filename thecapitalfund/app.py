@@ -9,7 +9,7 @@ def main():
     app = Dash(__name__, external_stylesheets=[BOOTSTRAP])
     app.title = "The Capital Fund"
     app.layout = layout.get_layout()
-    app.run_server(host="0.0.0.0", port=8050, debug=False)
+    app.run_server(host="0.0.0.0", port=8050, debug=True)
 
 
 if __name__ == "__main__":

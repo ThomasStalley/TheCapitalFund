@@ -6,6 +6,6 @@ def get_news_data() -> dict:
     return news_data
 
 
-def get_fangs_data() -> dict:
-    fangs_data = api.api_get_request(data_slug="fangs", data_key="FANGS")
+def get_sentiments_data() -> dict:
+    fangs_data = api.api_get_request(data_slug="sentiments", data_key="SENTIMENTS")
     return fangs_data

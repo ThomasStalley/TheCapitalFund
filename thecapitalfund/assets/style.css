@@ -21,6 +21,10 @@
   font-weight: bold;
 }
 
+.normal {
+  font-weight: normal !important;
+}
+
 .middle {
   text-align: center;
 }
@@ -66,11 +70,6 @@ li {
 
 p, th, td {
   text-align: center;
-}
-
-.table-header:hover {
-  font-style: italic;
-  font-weight: bold;
 }
 
 .login-tab {
@@ -147,6 +146,12 @@ p, th, td {
 
 .table {
   border-color: transparent;
+}
+
+.header {
+  font-family: "Garamond";
+  font-weight: normal;
+  font-style: italic;
 }
 
 #FooterHomeButton {
