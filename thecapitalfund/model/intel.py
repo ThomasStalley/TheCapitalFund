@@ -9,3 +9,4 @@ def get_news_data() -> dict:
 def get_sentiments_data() -> dict:
     fangs_data = api.api_get_request(data_slug="sentiments", data_key="SENTIMENTS")
     return fangs_data
+ 

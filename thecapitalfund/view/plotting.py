@@ -174,8 +174,10 @@ INTEL_PALETTE = px.colors.sequential.YlOrRd
 
 
 def get_sentiments_fig(sentiments_data: list) -> go.Figure:
+    assets = ["DATE", "BTC", "AAPL", "NVDA", "MSFT", "AMZN", "ETH", "META", "TSLA", "GOOGL"]
+
     sentiments_df = pd.DataFrame(sentiments_data)
-    sentiments_df = pd.DataFrame(sentiments_data)[["DATE", "MSFT", "NVDA", "AAPL", "AMZN", "META", "BTC", "ETH"]].copy()
+    sentiments_df = pd.DataFrame(sentiments_data)[assets].copy()
     sentiments_df["DATE"] = pd.to_datetime(sentiments_df["DATE"])
     # Create evenly spaced x-axis ticks
     first_date = sentiments_df["DATE"].min()
@@ -186,7 +188,6 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
     gradient_data = _generate_gradient(256, 256, "#008000", "#BC0909", opacity=0.33)
     # Create line plot
     sentiments_fig = px.line()
-    assets = ["MSFT", "NVDA", "AAPL", "AMZN", "META", "BTC", "ETH"]
     for i, asset in enumerate(assets):
         sentiments_fig.add_scatter(
             x=sentiments_df["DATE"],
