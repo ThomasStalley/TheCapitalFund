@@ -175,9 +175,7 @@ INTEL_PALETTE = px.colors.sequential.YlOrRd
 
 def get_sentiments_fig(sentiments_data: list) -> go.Figure:
     sentiments_df = pd.DataFrame(sentiments_data)
-    sentiments_df = pd.DataFrame(sentiments_data)[
-        ["DATE", "MSFT", "NVDA", "AAPL", "AMZN", "META", "GOOGL", "BTC", "ETH"]
-    ].copy()
+    sentiments_df = pd.DataFrame(sentiments_data)[["DATE", "MSFT", "NVDA", "AAPL", "AMZN", "META", "BTC", "ETH"]].copy()
     sentiments_df["DATE"] = pd.to_datetime(sentiments_df["DATE"])
     # Create evenly spaced x-axis ticks
     first_date = sentiments_df["DATE"].min()
