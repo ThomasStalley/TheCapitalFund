@@ -186,7 +186,7 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
     gradient_data = _generate_gradient(256, 256, "#008000", "#BC0909", opacity=0.33)
     # Create line plot
     sentiments_fig = px.line()
-    assets = ["MSFT", "NVDA", "TSLA", "BTC", "AAPL", "AMZN", "META", "GOOGL", "ETH"]
+    assets = ["MSFT", "NVDA", "AAPL", "AMZN", "META", "BTC", "ETH"]
     for i, asset in enumerate(assets):
         sentiments_fig.add_scatter(
             x=sentiments_df["DATE"],
