@@ -41,7 +41,6 @@ model-view-controller architecture:
     ├── assets/
     ├── model/
     ├── view/
-    ├── controller/
-    └── testing/
+    └── controller/
 ```
  
