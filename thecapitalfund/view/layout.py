@@ -339,17 +339,16 @@ def get_layout() -> html.Div:
                 dbc.Col(
                     children=[
                         html.P(
-                            "Here we investigate various investment strategies, focusing specifically on when and how frequently to invest, aiming to maximize returns per pound invested."
+                            "In this analysis, we explore various investment strategies, focusing on when and how often to invest to maximize returns per pound invested."
                         ),
                         html.P(
-                            "We establish three simple baseline methods that involve regular deposits — daily, weekly, and monthly — and then calculate the normalized returns for each."
+                            "We establish three simple baseline methods involving regular deposits—daily, weekly, and monthly—and calculate the normalized returns for each."
                         ),
                         html.P(
-                            "Additionally, we implement five machine learning techniques. For these methods, we invest today if a model predicts that the fund's price will increase tomorrow. "
-                            "Models are trained using fund asset prices from 2020 to 2022, with investment simulation and model evaluation using price data from 1st Jan 2023 onward."
+                            "Additionally, we implement five machine learning techniques. These models trigger an investment today if they predict the fund's price will rise tomorrow. Trained on feature engineered fund asset price data from 2020 to 2023, the models are evaluated through investment simulations using price data from January 1, 2024, onward."
                         ),
                         html.P(
-                            "Given the project's objective, we aim to maximize precision (correctly predicting price increases) so each deposit precedes an actual price increase."
+                            "We currently aim to maximise precision, as this metric tells us how many of the model's positive predictions (buy signals) were actually correct. A perfect precision would mean that we only invest prior to a price increase."
                         ),
                     ],
                     width=10,
@@ -368,7 +367,7 @@ def get_layout() -> html.Div:
                                         html.Th("Investment Method", className="header"),
                                         html.Th("Pounds Invested", className="header"),
                                         html.Th("Investments Made", className="header"),
-                                        html.Th("Return Per Pound Invested", className="header"),
+                                        html.Th("Return Per Pound", className="header"),
                                     ]
                                 )
                             ),
@@ -441,7 +440,7 @@ def get_layout() -> html.Div:
                 dbc.Col(
                     children=[
                         html.P(
-                            "This is a personal programming project, the goal being to create a production level, investment fund platform."
+                            "This is a personal programming project, the goal being to create a production level, investment fund portfolio."
                         ),
                         html.P("The app is updated daily, with real world financial data, sourced from my own api."),
                         html.P(

@@ -10,9 +10,9 @@ dot.node(
     "daily_update",
     """<
 <B>Daily Update @ 4:40AM</B><br/>
-• Get latest news stories, upload to db.<br/>
-• Get latest price data, upload to db.<br/>
-• Update members database using previous day transactions.<br/>
+• Get latest data (prices & sentiments), upload to db.<br/>
+• Process latest news stories, upload to db.<br/>
+• Calculate latest research numbers, upload to db.<br/>
 >""",
     shape="box",
     style="rounded",

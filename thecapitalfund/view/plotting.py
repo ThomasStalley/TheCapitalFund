@@ -1,11 +1,7 @@
-import base64
-import io
-
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from PIL import Image, ImageDraw
 from plotly.subplots import make_subplots
 
 # --------------------------------------------------------------------------------------------------------- Performance
@@ -173,29 +169,53 @@ def get_countries_fig(countries_data: list) -> go.Figure:
 INTEL_PALETTE = px.colors.sequential.YlOrRd
 
 
-def get_sentiments_fig(sentiments_data: list) -> go.Figure:
-    assets = ["DATE", "BTC", "AAPL", "NVDA", "MSFT", "AMZN", "ETH", "META", "TSLA", "GOOGL"]
+def _sentiment_level(value: float) -> str:
+    if value >= 0.7:
+        return "Extreme Optimism"
+    elif value >= 0.2:
+        return "Optimism"
+    elif value > -0.2:
+        return "Neutral"
+    elif value > -0.7:
+        return "Pessimism"
+    else:
+        return "Extreme Pessimism"
 
-    sentiments_df = pd.DataFrame(sentiments_data)
-    sentiments_df = pd.DataFrame(sentiments_data)[assets].copy()
+
+def _fang_level(value: float) -> str:
+    if value >= 0.7:
+        return "Extreme Greed"
+    elif value >= 0.2:
+        return "Greed"
+    elif value > -0.2:
+        return "Neutral"
+    elif value > -0.7:
+        return "Fear"
+    else:
+        return "Extreme Fear"
+
+
+def get_sentiments_fig(sentiments_data: list) -> go.Figure:
+    columns = ["DATE", "BTC", "AAPL", "NVDA", "MSFT", "AMZN", "ETH", "META"]
+    sentiments_df = pd.DataFrame(sentiments_data)[columns].copy()
     sentiments_df["DATE"] = pd.to_datetime(sentiments_df["DATE"])
-    # Create evenly spaced x-axis ticks
+    assets = columns[1:]
+    # create evenly spaced x axis ticks:
     first_date = sentiments_df["DATE"].min()
     last_date = sentiments_df["DATE"].max()
     n_ticks = 10
     tickvals = pd.to_datetime(np.linspace(first_date.value, last_date.value, n_ticks)).tolist()
-    # create gradient background image.
-    gradient_data = _generate_gradient(256, 256, "#008000", "#BC0909", opacity=0.33)
-    # Create line plot
+    # create line plot with sentiment labels for each asset:
     sentiments_fig = px.line()
     for i, asset in enumerate(assets):
         sentiments_fig.add_scatter(
             x=sentiments_df["DATE"],
             y=sentiments_df[asset],
             name=asset,
-            line=dict(color=INTEL_PALETTE[i % len(INTEL_PALETTE)]),
-            opacity=1.0,
-            hovertemplate="%{x|%Y-%m-%d}: %{y:.2f}",
+            text=sentiments_df[asset].apply(_sentiment_level),
+            textposition="top center",
+            hovertemplate="%{x|%Y-%m-%d}: %{y:.2f} (%{text})",
+            line=dict(color=INTEL_PALETTE[(i % len(INTEL_PALETTE)) + 2]),
         )
     sentiments_fig.update_layout(
         template="plotly_white",
@@ -234,49 +254,6 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
             zeroline=False,
             showgrid=False,
         ),
-        plot_bgcolor="rgba(0,0,0,0)",
-        images=[
-            dict(
-                source=gradient_data,
-                xref="paper",
-                yref="paper",
-                x=0,
-                y=1,
-                sizex=1,
-                sizey=1,
-                sizing="stretch",
-                layer="below",
-                opacity=1,
-            )
-        ],
-        annotations=[
-            dict(
-                text="OPTIMISM",
-                x=0,
-                y=1,
-                xref="paper",
-                yref="paper",
-                showarrow=False,
-                font=dict(
-                    family="Garamond",
-                    size=14,
-                    color="rgba(0,128,0,0.2)",
-                ),
-            ),
-            dict(
-                text="PESSIMISM",
-                x=0,
-                y=0,
-                xref="paper",
-                yref="paper",
-                showarrow=False,
-                font=dict(
-                    family="Garamond",
-                    size=14,
-                    color="rgba(188,9,9,0.2)",
-                ),
-            ),
-        ],
     )
     return sentiments_fig
 
@@ -285,42 +262,28 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
     sentiments_df = pd.DataFrame(sentiments_data)
     fangs_df = sentiments_df[["DATE", "STOCK", "CRYPTO"]].copy()
     fangs_df["DATE"] = pd.to_datetime(fangs_df["DATE"])
-
-    def sentiment_level(val: float) -> str:
-        if val >= 0.7:
-            return "Extreme Greed"
-        elif val >= 0.2:
-            return "Greed"
-        elif val > -0.2:
-            return "Neutral"
-        elif val > -0.7:
-            return "Fear"
-        else:
-            return "Extreme Fear"
-
-    fangs_df["STOCK_label"] = fangs_df["STOCK"].apply(sentiment_level)
-    fangs_df["CRYPTO_label"] = fangs_df["CRYPTO"].apply(sentiment_level)
-    # create evenly spaced x-axis ticks:
+    # assign fear and greed labels:
+    fangs_df["STOCK_label"] = fangs_df["STOCK"].apply(_fang_level)
+    fangs_df["CRYPTO_label"] = fangs_df["CRYPTO"].apply(_fang_level)
+    # create evenly spaced x axis ticks:
     first_date = fangs_df["DATE"].min()
     last_date = fangs_df["DATE"].max()
     n_ticks = 10
     tickvals = pd.to_datetime(np.linspace(first_date.value, last_date.value, n_ticks)).tolist()
-    # create gradient background image.
-    gradient_data = _generate_gradient(256, 256, "#008000", "#BC0909", opacity=0.33)
     # create the line plot:
     sentiments_fig = px.line()
     colors = [INTEL_PALETTE[-5], INTEL_PALETTE[-1]]
-    assets = ["STOCK", "CRYPTO"]
-    for i, asset in enumerate(assets):
+    assets = [("STOCK", "STOCK_label"), ("CRYPTO", "CRYPTO_label")]
+    for i, (asset, label_col) in enumerate(assets):
         sentiments_fig.add_scatter(
-            x=sentiments_df["DATE"],
-            y=sentiments_df[asset],
+            x=fangs_df["DATE"],
+            y=fangs_df[asset],
             name=asset,
+            text=fangs_df[label_col],
+            textposition="top center",
+            hovertemplate="%{x|%Y-%m-%d}: %{y:.2f} (%{text})",
             line=dict(color=colors[i]),
-            opacity=1.0,
-            hovertemplate="%{x|%Y-%m-%d}: %{y:.2f}",
         )
-    sentiments_fig.update_traces(hoverinfo="skip")
     sentiments_fig.update_layout(
         template="plotly_white",
         margin=dict(l=0, r=0, t=0, b=0),
@@ -358,71 +321,5 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
             zeroline=False,
             showgrid=False,
         ),
-        plot_bgcolor="rgba(0,0,0,0)",
-        images=[
-            dict(
-                source=gradient_data,
-                xref="paper",
-                yref="paper",
-                x=0,
-                y=1,
-                sizex=1,
-                sizey=1,
-                sizing="stretch",
-                layer="below",
-                opacity=1,
-            )
-        ],
-        annotations=[
-            dict(
-                text="GREED",
-                x=0,
-                y=1,
-                xref="paper",
-                yref="paper",
-                showarrow=False,
-                font=dict(
-                    family="Garamond",
-                    size=14,
-                    color="rgba(0,128,0,0.2)",
-                ),
-            ),
-            dict(
-                text="FEAR",
-                x=0,
-                y=0,
-                xref="paper",
-                yref="paper",
-                showarrow=False,
-                font=dict(
-                    family="Garamond",
-                    size=14,
-                    color="rgba(188,9,9,0.2)",
-                ),
-            ),
-        ],
     )
     return sentiments_fig
-
-
-def _generate_gradient(width: int, height: int, top_color: str, bottom_color: str, opacity: float) -> str:
-    image = Image.new("RGBA", (width, height))
-    draw = ImageDraw.Draw(image)
-
-    def hex_to_rgb(hex_color):
-        hex_color = hex_color.lstrip("#")
-        return tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
-
-    tc = hex_to_rgb(top_color)
-    bc = hex_to_rgb(bottom_color)
-    alpha_val = int(opacity * 255)
-    for y in range(height):
-        ratio = y / height
-        r = int(tc[0] * (1 - ratio) + bc[0] * ratio)
-        g = int(tc[1] * (1 - ratio) + bc[1] * ratio)
-        b = int(tc[2] * (1 - ratio) + bc[2] * ratio)
-        draw.line([(0, y), (width, y)], fill=(r, g, b, alpha_val))
-    buffered = io.BytesIO()
-    image.save(buffered, format="PNG")
-    img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
-    return "data:image/png;base64," + img_str
