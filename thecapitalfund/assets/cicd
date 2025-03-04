@@ -1,8 +1,8 @@
 digraph cicd {
 	daily_update [label=<
 <B>Daily Update @ 4:40AM</B><br/>
-• Get latest app data, upload to db.<br/>
-• Get, and process latest news stories, upload to db.<br/>
+• Get latest asset price data, upload to db.<br/>
+• Process latest news stories, upload to db.<br/>
 • Calculate latest research numbers, upload to db.<br/>
 > fixedsize=true fontname=Serif height=1 shape=box style=rounded width=5.8]
 	redeploy_backend [label=<
