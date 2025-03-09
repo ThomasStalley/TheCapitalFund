@@ -21,7 +21,7 @@ def get_layout() -> html.Div:
     countries_data = analysis.get_countries_data()
     news_data = intel.get_news_data()
     sentiments_data = intel.get_sentiments_data()
-    models_data = research.get_models_data()
+    rdays_data = research.get_rdays_data()
     metrics_data = research.get_metrics_data()
     today = prices.today()
     # construct tab layouts:
@@ -33,6 +33,18 @@ def get_layout() -> html.Div:
                 id="PlottingContainer",
                 children=[
                     dbc.Row(dbc.Col([html.P("Fund Performance", className="subtitle")], width=10), justify="center"),
+                    dbc.Row(
+                        dbc.Col(
+                            children=[
+                                html.P(
+                                    "The Capital Fund is a fictional mixed asset investment fund, established on 1st Jan 2023."
+                                ),
+                            ],
+                            width=11,
+                        ),
+                        justify="center",
+                    ),
+                    html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
                     dbc.Row(
                         dbc.Col(
                             id="TotalPlottingContainer",
@@ -48,9 +60,23 @@ def get_layout() -> html.Div:
                                     color="#000000",
                                 ),
                             ],
+                            width=11,
                         ),
+                        justify="center",
                     ),
                     dbc.Row(dbc.Col([html.P("Asset Performance", className="subtitle")], width=10), justify="center"),
+                    dbc.Row(
+                        dbc.Col(
+                            children=[
+                                html.P(
+                                    "The fund is comprised of a world index fund and two cryptocurrencies."
+                                ),
+                            ],
+                            width=11,
+                        ),
+                        justify="center",
+                    ),
+                    html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
                     dbc.Row(
                         dbc.Col(
                             id="AssetsPlottingContainer",
@@ -64,7 +90,9 @@ def get_layout() -> html.Div:
                                     )
                                 ),
                             ],
+                            width=11,
                         ),
+                        justify="center",
                     ),
                     dbc.Row(dbc.Col(html.P("spacer", style={"font-size": "2px", "opacity": "0"}))),
                 ],
@@ -107,7 +135,7 @@ def get_layout() -> html.Div:
                         className="equal-width-table",
                         striped=True,
                     ),
-                    width=10,
+                    width=11,
                 ),
                 justify="center",
             ),
@@ -171,7 +199,7 @@ def get_layout() -> html.Div:
                         className="equal-width-table",
                         striped=True,
                     ),
-                    width=10,
+                    width=11,
                 ),
                 justify="center",
             ),
@@ -191,7 +219,7 @@ def get_layout() -> html.Div:
                                 ),
                             )
                         ],
-                        width=10,
+                        width=11,
                     )
                 ],
                 justify="center",
@@ -213,7 +241,7 @@ def get_layout() -> html.Div:
                                 ),
                             )
                         ],
-                        width=10,
+                        width=11,
                     )
                 ],
                 justify="center",
@@ -235,7 +263,7 @@ def get_layout() -> html.Div:
                                 ),
                             )
                         ],
-                        width=10,
+                        width=11,
                     )
                 ],
                 justify="center",
@@ -258,7 +286,7 @@ def get_layout() -> html.Div:
                             style={"height": "300px"},
                         ),
                     ],
-                    width=10,
+                    width=11,
                 ),
                 justify="center",
             ),
@@ -275,7 +303,7 @@ def get_layout() -> html.Div:
                             style={"height": "300px"},
                         ),
                     ],
-                    width=10,
+                    width=11,
                 ),
                 justify="center",
             ),
@@ -325,7 +353,7 @@ def get_layout() -> html.Div:
                         ],
                         striped=True,
                     ),
-                    width=10,
+                    width=11,
                 ),
                 justify="center",
             ),
@@ -338,25 +366,33 @@ def get_layout() -> html.Div:
             dbc.Row(
                 dbc.Col(
                     children=[
-                        html.P(
-                            "In this analysis, we explore various investment strategies, focusing on when and how often to invest to maximize returns per pound invested."
-                        ),
-                        html.P(
-                            "We establish three simple baseline methods involving regular deposits—daily, weekly, and monthly—and calculate the normalized returns for each."
-                        ),
-                        html.P(
-                            "Additionally, we implement five machine learning techniques. These models trigger an investment today if they predict the fund's price will rise tomorrow. Trained on feature engineered fund asset price data from 2020 to 2023, the models are evaluated through investment simulations using price data from January 1, 2024, onward."
-                        ),
-                        html.P(
-                            "We currently aim to maximise precision, as this metric tells us how many of the model's positive predictions (buy signals) were actually correct. A perfect precision would mean that we only invest prior to a price increase."
+                        html.P("Here we simulate investing with various deposit frequencies."),
+                    ],
+                    width=11,
+                ),
+                justify="center",
+            ),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
+            dbc.Row(dbc.Col(html.P("Investment Methods", className="subtitle"))),
+            dbc.Row(
+                dbc.Col(
+                    children=[
+                        dcc.Loading(
+                            children=dcc.Graph(
+                                figure=plotting.get_rdays_figure(rdays_data),
+                                config={"displayModeBar": False},
+                                style={"height": "500px"},
+                            ),
+                            type="circle",
+                            color="#000000",
                         ),
                     ],
-                    width=10,
+                    width=11,
                 ),
                 justify="center",
             ),
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
-            dbc.Row(dbc.Col(html.P("Investing Methods", className="subtitle"))),
+            dbc.Row(dbc.Col(html.P("Investment Metrics", className="subtitle"))),
             dbc.Row(
                 dbc.Col(
                     dbc.Table(
@@ -364,10 +400,13 @@ def get_layout() -> html.Div:
                             html.Thead(
                                 html.Tr(
                                     [
-                                        html.Th("Investment Method", className="header"),
-                                        html.Th("Pounds Invested", className="header"),
-                                        html.Th("Investments Made", className="header"),
+                                        html.Th("Method", className="header"),
+                                        html.Th("Invested", className="header"),
+                                        html.Th("Portfolio Value", className="header"),
+                                        html.Th("No. Investments", className="header"),
                                         html.Th("Return Per Pound", className="header"),
+                                        html.Th("PnL", className="header"),
+                                        html.Th("Percentage Change", className="header"),
                                     ]
                                 )
                             ),
@@ -375,57 +414,23 @@ def get_layout() -> html.Div:
                                 [
                                     html.Tr(
                                         [
-                                            html.Th(method["model"], className="normal"),
-                                            html.Th(f'£{method["invested"]}', className="normal"),
-                                            html.Th(method["n_investments"], className="normal"),
-                                            html.Th(f'£{method["rpp"]}', className="normal"),
+                                            html.Td(mdata["METHOD"]),
+                                            html.Td(f"£{mdata['INVESTED']:.2f}"),
+                                            html.Td(f"£{mdata['VALUE']:.2f}"),
+                                            html.Td(mdata["N_INVESTMENTS"]),
+                                            html.Td(f"£{mdata['RPP']:.4f}"),
+                                            html.Td(f"£{mdata['PNL']:.2f}"),
+                                            html.Td(f"{mdata['PERCENTAGE_PROFIT']:.4f}%"),
                                         ]
                                     )
-                                    for method in metrics_data
+                                    for mdata in metrics_data
                                 ]
                             ),
                         ],
                         className="equal-width-table",
                         striped=True,
                     ),
-                    width=10,
-                ),
-                justify="center",
-            ),
-            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
-            dbc.Row(dbc.Col(html.P("Model Metrics", className="subtitle"))),
-            dbc.Row(
-                dbc.Col(
-                    dbc.Table(
-                        [
-                            html.Thead(
-                                html.Tr(
-                                    [
-                                        html.Th("Model", className="header"),
-                                        html.Th("Precision", className="header"),
-                                        html.Th("Recall", className="header"),
-                                        html.Th("F1", className="header"),
-                                    ]
-                                )
-                            ),
-                            html.Tbody(
-                                [
-                                    html.Tr(
-                                        [
-                                            html.Th(model["model"], className="normal"),
-                                            html.Th(model["precision"], className="normal"),
-                                            html.Th(model["recall"], className="normal"),
-                                            html.Th(model["f1"], className="normal"),
-                                        ]
-                                    )
-                                    for model in models_data
-                                ]
-                            ),
-                        ],
-                        className="equal-width-table",
-                        striped=True,
-                    ),
-                    width=10,
+                    width=11,
                 ),
                 justify="center",
             ),
@@ -468,7 +473,7 @@ def get_layout() -> html.Div:
                             ],
                         ),
                     ],
-                    width=10,
+                    width=11,
                 ),
                 className="ebg middle",
                 justify="center",

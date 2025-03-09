@@ -323,3 +323,72 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
         ),
     )
     return sentiments_fig
+
+
+# ------------------------------------------------------------------------------------------------------------ Research
+INTEL_PALETTE = px.colors.sequential.YlOrRd
+
+
+def get_rdays_figure(rdays_data):
+    rdays_df = pd.DataFrame(rdays_data)
+    rdays_fig = go.Figure()
+    rdays_fig.add_trace(
+        go.Scatter(
+            x=rdays_df["DATE"],
+            y=rdays_df["DAILY"],
+            mode="lines",
+            name="Daily Investment",
+            line=dict(color=INTEL_PALETTE[-5]),
+        )
+    )
+    rdays_fig.add_trace(
+        go.Scatter(
+            x=rdays_df["DATE"],
+            y=rdays_df["WEEKLY"],
+            mode="lines",
+            name="Weekly Investment",
+            line=dict(color=INTEL_PALETTE[-3]),
+        )
+    )
+    rdays_fig.add_trace(
+        go.Scatter(
+            x=rdays_df["DATE"],
+            y=rdays_df["MONTHLY"],
+            mode="lines",
+            name="Monthly Investment",
+            line=dict(color=INTEL_PALETTE[-2]),
+        )
+    )
+    rdays_fig.add_trace(
+        go.Scatter(
+            x=rdays_df["DATE"],
+            y=rdays_df["QUARTERLY"],
+            mode="lines",
+            name="Quarterly Investment",
+            line=dict(color=INTEL_PALETTE[-1]),
+        )
+    )
+    rdays_fig.update_layout(
+        template="plotly_white",
+        margin=dict(l=10, r=10, t=10, b=10),
+        font=dict(family="Serif", size=15, color="Black"),
+        xaxis_title="",
+        yaxis_title="",
+        yaxis_tickprefix="£",
+        xaxis_showline=True,
+        xaxis_linewidth=1,
+        xaxis_linecolor="black",
+        xaxis_mirror=True,
+        yaxis_showline=True,
+        yaxis_linewidth=1,
+        yaxis_linecolor="black",
+        yaxis_mirror=True,
+        legend=dict(orientation="h", yanchor="bottom", xanchor="center", x=0.5, y=-0.2),
+        hovermode="closest",
+        hoverlabel=dict(bgcolor="#BC0909", font_size=16, font_family="Serif", font_color="white"),
+    )
+    for ele in rdays_fig.data:
+        ele.hoverinfo = "none"
+        ele.hovertemplate = "%{x|%d %b %Y}: £%{y:.2f}"
+        ele.hoverlabel = dict(bgcolor=ele.line.color)
+    return rdays_fig
