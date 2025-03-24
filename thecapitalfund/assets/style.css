@@ -297,3 +297,145 @@ p, th, td {
   display: flex;
   height: 30px;         
 }
+
+.architecture-container {
+  border: 0.5px solid black;
+  border-radius: 0.2rem;
+  padding: 10px;
+  position: relative;
+  background-color: #0000001a;
+}
+
+.architecture-label {
+  position: absolute;
+  bottom: 0px;
+  right: -5px;
+  font-size: 14px;
+  font-style: italic;
+  font-family: "EB Garamond, serif";
+}
+
+.aws-container {
+  border: 0.5px solid black;
+  height: 200px;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 0.2rem;
+  background-color: rgba(255, 153, 0, 0.5);
+  position: relative;
+}
+
+.render-container {
+  border: 0.5px solid black;
+  height: 200px;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 0.2rem;
+  background-color: rgba(138, 5, 255, 0.5);
+  position: relative;
+}
+
+.service-label {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  font-size: 16px;
+  font-style: italic;
+  font-family: "EB Garamond, serif";
+  color: white;
+}
+
+.service-box {
+  border: 0.5px solid black;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.2rem;
+  font-family: "EB Garamond, serif";
+  text-align: center;
+  background-color: white;
+}
+
+.service-title {
+  font-weight: bold;
+}
+
+.service-desc {
+  font-size: 14px;
+}
+
+.service-url {
+  font-size: 12px;
+  font-style: italic;
+  color: #8B0000;
+}
+
+.render-box {
+  border: 0.5px solid black;
+  height: 153px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.2rem;
+  font-family: "EB Garamond, serif";
+  text-align: center;
+  background-color: white;
+  transform: translate(0px, -4px);
+}
+
+.render-desc {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.col-padding-5 {
+  padding: 5px;
+}
+
+#first-row {
+  margin-bottom: 20px;
+  border: 0.5px solid black;
+  border-radius: 0.2rem;
+  padding: 10px;
+  position: relative;
+  background-color: #0000001a;
+}
+
+#backend-column, #frontend-column {
+  border: 0.5px solid black;
+  height: 100px;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 0.2rem;
+  background-color: white;
+}
+
+#backend-repo-container, #frontend-repo-container {
+  font-family: "EB Garamond", serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+#backend-repo-title, #frontend-repo-title {
+  font-weight: bold;
+}
+
+#backend-repo-desc, #frontend-repo-desc {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+#render-container {
+  font-family: "EB Garamond", serif;
+  height: 100%;
+  text-align: center;
+}

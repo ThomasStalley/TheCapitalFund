@@ -68,9 +68,7 @@ def get_layout() -> html.Div:
                     dbc.Row(
                         dbc.Col(
                             children=[
-                                html.P(
-                                    "The fund is comprised of a world index fund and two cryptocurrencies."
-                                ),
+                                html.P("The fund is comprised of a world index fund and two cryptocurrencies."),
                             ],
                             width=11,
                         ),
@@ -480,35 +478,262 @@ def get_layout() -> html.Div:
             ),
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             html.P("Deployment", className="subtitle", style={"transform": "translate(0, 10px)"}),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             dbc.Row(
                 dbc.Col(
-                    html.Img(
-                        src="/assets/cicd.png",
-                        style={
-                            "width": "89%",
-                            "display": "block",
-                            "margin": "0 auto",
-                        },
+                    dbc.Table(
+                        [
+                            html.Thead(
+                                html.Tr(
+                                    [
+                                        html.Th("Daily Update", className="header"),
+                                        html.Th("Redeploy Backend", className="header"),
+                                        html.Th("Redeploy Frontend", className="header"),
+                                    ]
+                                )
+                            ),
+                            html.Tbody(
+                                children=[
+                                    html.Tr(
+                                        children=[
+                                            html.Td("Collect latest data, process, upload to db."),
+                                            html.Td(
+                                                "Upload latest Docker image to ECR. Redeploy ECS using latest container."
+                                            ),
+                                            html.Td("Trigger redeploy of frontend via Render webhook."),
+                                        ],
+                                    ),
+                                ],
+                            ),
+                        ],
+                        className="equal-width-table",
+                        striped=True,
                     ),
-                    width=12,
-                    className="text-center",
-                )
+                    width=11,
+                ),
+                justify="center",
             ),
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             html.P("Architecture", className="subtitle", style={"transform": "translate(0, 20px)"}),
+            html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             dbc.Row(
                 dbc.Col(
-                    html.Img(
-                        src="/assets/architecture.png",
-                        style={
-                            "width": "90%",
-                            "display": "block",
-                            "margin": "0 auto",
-                        },
-                    ),
-                    width=12,
-                    className="text-center",
-                )
+                    children=[
+                        dbc.Row(
+                            children=[
+                                dbc.Col(
+                                    children=[
+                                        html.Div(
+                                            children=[
+                                                html.Div(
+                                                    "Backend Repository",
+                                                    style={"font-weight": "bold"},
+                                                    id="backend-repo-title",
+                                                ),
+                                                html.Div(
+                                                    children=["Data collection (ETL) and communication (API)."],
+                                                    style={"font-size": "14px", "margin-top": "5px"},
+                                                    id="backend-repo-desc",
+                                                ),
+                                            ],
+                                            id="backend-repo-container",
+                                        )
+                                    ],
+                                    id="backend-column",
+                                ),
+                                dbc.Col(
+                                    children=[
+                                        html.Div(
+                                            children=[
+                                                html.Div(
+                                                    "Frontend Repository",
+                                                    style={"font-weight": "bold"},
+                                                    id="frontend-repo-title",
+                                                ),
+                                                html.Div(
+                                                    children=["Model-view-controller dash web app."],
+                                                    style={"font-size": "14px", "margin-top": "5px"},
+                                                    id="frontend-repo-desc",
+                                                ),
+                                            ],
+                                            id="frontend-repo-container",
+                                        )
+                                    ],
+                                    id="frontend-column",
+                                ),
+                                html.Div("Codebases", className="architecture-label", id="codebases-label"),
+                            ],
+                            id="first-row",
+                            justify="center",
+                        ),
+                        dbc.Row(
+                            id="architecture-row",
+                            children=[
+                                dbc.Col(
+                                    children=[
+                                        dbc.Row(
+                                            children=[
+                                                dbc.Col(
+                                                    children=[
+                                                        html.Div(
+                                                            children=[
+                                                                html.Div(
+                                                                    "AWS ECR", className="service-title", id="ecr-title"
+                                                                ),
+                                                                html.Div(
+                                                                    "Backend container repo.",
+                                                                    className="service-desc",
+                                                                    id="ecr-desc",
+                                                                ),
+                                                            ],
+                                                            className="service-box",
+                                                            id="ecr-container",
+                                                        )
+                                                    ],
+                                                    className="col-padding-5",
+                                                    id="ecr-column",
+                                                ),
+                                                dbc.Col(
+                                                    children=[
+                                                        html.Div(
+                                                            children=[
+                                                                html.Div(
+                                                                    "AWS RDS", className="service-title", id="rds-title"
+                                                                ),
+                                                                html.Div(
+                                                                    "MySQL database.",
+                                                                    className="service-desc",
+                                                                    id="rds-desc",
+                                                                ),
+                                                            ],
+                                                            className="service-box",
+                                                            id="rds-container",
+                                                        )
+                                                    ],
+                                                    className="col-padding-5",
+                                                    id="rds-column",
+                                                ),
+                                            ],
+                                            className="g-2",
+                                            id="aws-row-1",
+                                        ),
+                                        dbc.Row(
+                                            children=[
+                                                dbc.Col(
+                                                    children=[
+                                                        html.Div(
+                                                            children=[
+                                                                html.Div(
+                                                                    "AWS ECS",
+                                                                    className="service-title",
+                                                                    id="ecs-staging-title",
+                                                                ),
+                                                                html.Div(
+                                                                    "Staging backend.",
+                                                                    className="service-desc",
+                                                                    id="ecs-staging-desc",
+                                                                ),
+                                                                html.Div(
+                                                                    "capitalapi.stg.auchester.com",
+                                                                    className="service-url",
+                                                                    id="ecs-staging-url",
+                                                                ),
+                                                            ],
+                                                            className="service-box",
+                                                            id="ecs-staging-container",
+                                                        )
+                                                    ],
+                                                    className="col-padding-5",
+                                                    id="ecs-staging-column",
+                                                ),
+                                                dbc.Col(
+                                                    children=[
+                                                        html.Div(
+                                                            children=[
+                                                                html.Div(
+                                                                    "AWS ECS",
+                                                                    className="service-title",
+                                                                    id="ecs-prod-title",
+                                                                ),
+                                                                html.Div(
+                                                                    "Production backend.",
+                                                                    className="service-desc",
+                                                                    id="ecs-prod-desc",
+                                                                ),
+                                                                html.Div(
+                                                                    "capitalapi.auchester.com",
+                                                                    className="service-url",
+                                                                    id="ecs-prod-url",
+                                                                ),
+                                                            ],
+                                                            className="service-box",
+                                                            id="ecs-prod-container",
+                                                        )
+                                                    ],
+                                                    className="col-padding-5",
+                                                    id="ecs-prod-column",
+                                                ),
+                                            ],
+                                            className="g-2",
+                                            id="aws-row-2",
+                                        ),
+                                        html.Div("AWS", className="service-label", id="aws-label"),
+                                    ],
+                                    className="aws-container",
+                                    id="aws-services-column",
+                                ),
+                                dbc.Col(
+                                    children=[
+                                        html.Div(
+                                            children=[
+                                                dbc.Row(
+                                                    children=[
+                                                        dbc.Col(
+                                                            children=[
+                                                                html.Div(
+                                                                    children=[
+                                                                        html.Div(
+                                                                            "Render Web Service",
+                                                                            className="service-title",
+                                                                            id="render-title",
+                                                                        ),
+                                                                        html.Div(
+                                                                            "Production frontend.",
+                                                                            className="render-desc",
+                                                                            id="render-desc",
+                                                                        ),
+                                                                        html.Div(
+                                                                            "capital.auchester.com",
+                                                                            className="service-url",
+                                                                            id="render-url",
+                                                                        ),
+                                                                    ],
+                                                                    className="render-box",
+                                                                    id="render-inner-container",
+                                                                )
+                                                            ],
+                                                            id="render-inner-column",
+                                                        )
+                                                    ],
+                                                    id="render-inner-row",
+                                                )
+                                            ],
+                                            id="render-container",
+                                        ),
+                                        html.Div("Render", className="service-label", id="render-label"),
+                                    ],
+                                    className="render-container",
+                                    id="render-column",
+                                ),
+                                html.Div("Deployment", className="architecture-label", id="deployment-label"),
+                            ],
+                            className="architecture-container",
+                            justify="center",
+                        ),
+                    ],
+                    width=11,
+                ),
+                justify="center",
             ),
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
         ],
