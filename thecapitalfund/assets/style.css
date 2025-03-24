@@ -299,11 +299,10 @@ p, th, td {
 }
 
 .architecture-container {
-  border: 0.5px solid black;
   border-radius: 0.2rem;
   padding: 10px;
   position: relative;
-  background-color: #0000001a;
+  background-color:rgba(0, 0, 0, 0.05);
 }
 
 .architecture-label {
@@ -316,7 +315,6 @@ p, th, td {
 }
 
 .aws-container {
-  border: 0.5px solid black;
   height: 200px;
   padding: 15px;
   margin: 10px;
@@ -326,7 +324,6 @@ p, th, td {
 }
 
 .render-container {
-  border: 0.5px solid black;
   height: 200px;
   padding: 20px;
   margin: 10px;
@@ -346,7 +343,6 @@ p, th, td {
 }
 
 .service-box {
-  border: 0.5px solid black;
   height: 70px;
   width: 100%;
   display: flex;
@@ -374,7 +370,6 @@ p, th, td {
 }
 
 .render-box {
-  border: 0.5px solid black;
   height: 153px;
   width: 100%;
   display: flex;
@@ -399,15 +394,13 @@ p, th, td {
 
 #first-row {
   margin-bottom: 20px;
-  border: 0.5px solid black;
   border-radius: 0.2rem;
   padding: 10px;
   position: relative;
-  background-color: #0000001a;
+  background-color:rgba(0, 0, 0, 0.05);
 }
 
 #backend-column, #frontend-column {
-  border: 0.5px solid black;
   height: 100px;
   padding: 20px;
   margin: 10px;

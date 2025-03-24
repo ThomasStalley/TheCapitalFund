@@ -498,7 +498,7 @@ def get_layout() -> html.Div:
                                         children=[
                                             html.Td("Collect latest data, process, upload to db."),
                                             html.Td(
-                                                "Upload latest Docker image to ECR. Redeploy ECS using latest container."
+                                                "Upload latest Docker image to ECR & Redeploy ECS using latest container."
                                             ),
                                             html.Td("Trigger redeploy of frontend via Render webhook."),
                                         ],
