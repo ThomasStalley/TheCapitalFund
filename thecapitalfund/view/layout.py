@@ -677,7 +677,7 @@ def get_layout() -> html.Div:
                                             className="g-2",
                                             id="aws-row-2",
                                         ),
-                                        html.Div("AWS", className="service-label", id="aws-label"),
+                                        html.Div("AWS (& Terraform)", className="service-label", id="aws-label"),
                                     ],
                                     className="aws-container",
                                     id="aws-services-column",
