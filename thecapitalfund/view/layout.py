@@ -460,10 +460,10 @@ def get_layout() -> html.Div:
                         ),
                         html.P(
                             [
-                                "Built with dash, by plotly: ",
+                                "Featured in plotly app gallery: ",
                                 html.A(
-                                    "dash.plotly.com",
-                                    href="https://dash.plotly.com/",
+                                    "plotly.com/examples/finance/",
+                                    href="https://plotly.com/examples/finance/",
                                     target="_blank",
                                     style={"color": "#000000"},
                                 ),
