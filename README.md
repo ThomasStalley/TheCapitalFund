@@ -1,6 +1,6 @@
 _**📈 The Capital Fund 📈**_
 
-A mock investment fund web application - built with <a href="https://dash.plotly.com/">dash, by plotly</a>.
+A mock investment fund web application.
 
 The app is updated daily, with real world financial data, sourced from an asset price api.
 
