@@ -759,7 +759,7 @@ def get_layout() -> html.Div:
                         id="DeltaScreenRow",
                         justify="center",
                         children=dbc.Col(
-                            width=9,
+                            width=10,
                             children=[
                                 html.Div(
                                     id="DeltaScreen",
@@ -779,7 +779,7 @@ def get_layout() -> html.Div:
                         justify="center",
                         children=[
                             dbc.Col(
-                                width=9,
+                                width=10,
                                 children=[
                                     dbc.Tabs(
                                         id="NavBarTabs",
@@ -817,7 +817,7 @@ def get_layout() -> html.Div:
                         children=[
                             dbc.Col(
                                 id="TabContentCol",
-                                width=9,
+                                width=10,
                                 children=[
                                     html.Div(
                                         id="TabContentInner",
