@@ -432,3 +432,11 @@ p, th, td {
   height: 100%;
   text-align: center;
 }
+
+#FrozenTitle {
+  color: #0099ff;
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  font-size: 12px;
+}
