@@ -581,7 +581,7 @@ def get_layout() -> html.Div:
                                                                     "AWS ECR", className="service-title", id="ecr-title"
                                                                 ),
                                                                 html.Div(
-                                                                    "Backend container repo.",
+                                                                    "Backend container repository.",
                                                                     className="service-desc",
                                                                     id="ecr-desc",
                                                                 ),
@@ -592,26 +592,6 @@ def get_layout() -> html.Div:
                                                     ],
                                                     className="col-padding-5",
                                                     id="ecr-column",
-                                                ),
-                                                dbc.Col(
-                                                    children=[
-                                                        html.Div(
-                                                            children=[
-                                                                html.Div(
-                                                                    "AWS RDS", className="service-title", id="rds-title"
-                                                                ),
-                                                                html.Div(
-                                                                    "MySQL database.",
-                                                                    className="service-desc",
-                                                                    id="rds-desc",
-                                                                ),
-                                                            ],
-                                                            className="service-box",
-                                                            id="rds-container",
-                                                        )
-                                                    ],
-                                                    className="col-padding-5",
-                                                    id="rds-column",
                                                 ),
                                             ],
                                             className="g-2",
@@ -626,37 +606,10 @@ def get_layout() -> html.Div:
                                                                 html.Div(
                                                                     "AWS ECS",
                                                                     className="service-title",
-                                                                    id="ecs-staging-title",
-                                                                ),
-                                                                html.Div(
-                                                                    "Staging backend.",
-                                                                    className="service-desc",
-                                                                    id="ecs-staging-desc",
-                                                                ),
-                                                                html.Div(
-                                                                    "capitalapi.stg.auchester.com",
-                                                                    className="service-url",
-                                                                    id="ecs-staging-url",
-                                                                ),
-                                                            ],
-                                                            className="service-box",
-                                                            id="ecs-staging-container",
-                                                        )
-                                                    ],
-                                                    className="col-padding-5",
-                                                    id="ecs-staging-column",
-                                                ),
-                                                dbc.Col(
-                                                    children=[
-                                                        html.Div(
-                                                            children=[
-                                                                html.Div(
-                                                                    "AWS ECS",
-                                                                    className="service-title",
                                                                     id="ecs-prod-title",
                                                                 ),
                                                                 html.Div(
-                                                                    "Production backend.",
+                                                                    "Backend container service.",
                                                                     className="service-desc",
                                                                     id="ecs-prod-desc",
                                                                 ),
@@ -759,7 +712,7 @@ def get_layout() -> html.Div:
                         id="DeltaScreenRow",
                         justify="center",
                         children=dbc.Col(
-                            width=10,
+                            width=9,
                             children=[
                                 html.Div(
                                     id="DeltaScreen",
@@ -779,7 +732,7 @@ def get_layout() -> html.Div:
                         justify="center",
                         children=[
                             dbc.Col(
-                                width=10,
+                                width=9,
                                 children=[
                                     dbc.Tabs(
                                         id="NavBarTabs",
@@ -817,7 +770,7 @@ def get_layout() -> html.Div:
                         children=[
                             dbc.Col(
                                 id="TabContentCol",
-                                width=10,
+                                width=9,
                                 children=[
                                     html.Div(
                                         id="TabContentInner",
