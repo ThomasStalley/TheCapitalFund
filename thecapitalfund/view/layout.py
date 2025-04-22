@@ -708,6 +708,13 @@ def get_layout() -> html.Div:
                             "The Capital Fund",
                         ],
                     ),
+                    html.P(
+                        id="FrozenTitle",
+                        className="temp middle",
+                        children=[
+                            "APP FROZEN 22-04-25",
+                        ],
+                    ),
                     dbc.Row(
                         id="DeltaScreenRow",
                         justify="center",
