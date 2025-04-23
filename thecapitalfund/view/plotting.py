@@ -21,7 +21,7 @@ def get_assets_figure(data: pd.DataFrame) -> go.Figure:
     days = data["DateTime"]
     # calculate percentage that each asset contributes to fund price:
     tcf_price_today = data["ACF"][-1]
-    van_name = f"VAEIAGA [{round(100 * (data['VAN'][-1] * 8 / tcf_price_today), 2)}%]"
+    van_name = f"VAN [{round(100 * (data['VAN'][-1] * 8 / tcf_price_today), 2)}%]"
     btc_name = f"BTC [{round(100 * (data['BTC'][-1] * 0.0014349 / tcf_price_today), 2)}%]"
     eth_name = f"ETH [{round(100 * (data['ETH'][-1] * 0.0199347 / tcf_price_today), 2)}%]"
     # create and format assets graph:
@@ -199,6 +199,7 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
     columns = ["DATE", "BTC", "AAPL", "NVDA", "MSFT", "AMZN", "ETH", "META"]
     sentiments_df = pd.DataFrame(sentiments_data)[columns].copy()
     sentiments_df["DATE"] = pd.to_datetime(sentiments_df["DATE"])
+    sentiments_df = sentiments_df[(sentiments_df["DATE"] >= "2025-03-01") & (sentiments_df["DATE"] <= "2025-04-22")]
     assets = columns[1:]
     # create evenly spaced x axis ticks:
     first_date = sentiments_df["DATE"].min()
@@ -217,6 +218,18 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
             hovertemplate="%{x|%Y-%m-%d}: %{y:.2f} (%{text})",
             line=dict(color=INTEL_PALETTE[(i % len(INTEL_PALETTE)) + 2]),
         )
+    sentiments_fig.add_annotation(
+        x=-0.02,
+        y=-0.02,
+        xref="paper",
+        yref="paper",
+        text="source: eodhd.com",
+        showarrow=False,
+        font=dict(family="Serif", size=10, color="grey"),
+        align="left",
+        xanchor="left",
+        yanchor="bottom",
+    )
     sentiments_fig.update_layout(
         template="plotly_white",
         margin=dict(l=0, r=0, t=0, b=0),
@@ -262,6 +275,7 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
     sentiments_df = pd.DataFrame(sentiments_data)
     fangs_df = sentiments_df[["DATE", "STOCK", "CRYPTO"]].copy()
     fangs_df["DATE"] = pd.to_datetime(fangs_df["DATE"])
+    fangs_df = fangs_df[(fangs_df["DATE"] >= "2025-03-01") & (fangs_df["DATE"] <= "2025-04-22")]
     # assign fear and greed labels:
     fangs_df["STOCK_label"] = fangs_df["STOCK"].apply(_fang_level)
     fangs_df["CRYPTO_label"] = fangs_df["CRYPTO"].apply(_fang_level)
@@ -271,11 +285,11 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
     n_ticks = 10
     tickvals = pd.to_datetime(np.linspace(first_date.value, last_date.value, n_ticks)).tolist()
     # create the line plot:
-    sentiments_fig = px.line()
+    fangs_fig = px.line()
     colors = [INTEL_PALETTE[-5], INTEL_PALETTE[-1]]
     assets = [("STOCK", "STOCK_label"), ("CRYPTO", "CRYPTO_label")]
     for i, (asset, label_col) in enumerate(assets):
-        sentiments_fig.add_scatter(
+        fangs_fig.add_scatter(
             x=fangs_df["DATE"],
             y=fangs_df[asset],
             name=asset,
@@ -284,7 +298,19 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
             hovertemplate="%{x|%Y-%m-%d}: %{y:.2f} (%{text})",
             line=dict(color=colors[i]),
         )
-    sentiments_fig.update_layout(
+    fangs_fig.add_annotation(
+        x=-0.02,
+        y=-0.02,
+        xref="paper",
+        yref="paper",
+        text="source: feargreedmeter.com",
+        showarrow=False,
+        font=dict(family="Serif", size=10, color="grey"),
+        align="left",
+        xanchor="left",
+        yanchor="bottom",
+    )
+    fangs_fig.update_layout(
         template="plotly_white",
         margin=dict(l=0, r=0, t=0, b=0),
         font=dict(family="Serif", size=15, color="Black"),
@@ -322,7 +348,7 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
             showgrid=False,
         ),
     )
-    return sentiments_fig
+    return fangs_fig
 
 
 # ------------------------------------------------------------------------------------------------------------ Research

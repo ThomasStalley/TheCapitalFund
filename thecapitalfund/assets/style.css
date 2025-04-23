@@ -433,10 +433,16 @@ p, th, td {
   text-align: center;
 }
 
-#FrozenTitle {
-  color: #0099ff;
+#FreezeTitle {
   position: absolute;
-  top: 2px;
-  left: 5px;
-  font-size: 12px;
+  top: 45px;
+  left: -60px;
+  transform: rotate(-45deg);
+  background-color: rgb(0, 159, 255);
+  color: white;
+  padding: 5px 50px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
 }

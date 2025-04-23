@@ -709,10 +709,10 @@ def get_layout() -> html.Div:
                         ],
                     ),
                     html.P(
-                        id="FrozenTitle",
-                        className="temp middle",
+                        id="FreezeTitle",
+                        className="temp middle title",
                         children=[
-                            "APP FROZEN 22-04-25",
+                            "App Frozen 01-05-25",
                         ],
                     ),
                     dbc.Row(
