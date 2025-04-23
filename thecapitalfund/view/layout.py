@@ -702,17 +702,17 @@ def get_layout() -> html.Div:
             html.Div(
                 children=[
                     html.P(
-                        id="AppTitle",
-                        className="temp middle title",
-                        children=[
-                            "The Capital Fund",
-                        ],
-                    ),
-                    html.P(
                         id="FreezeTitle",
                         className="temp middle title",
                         children=[
                             "App Frozen 01-05-25",
+                        ],
+                    ),
+                    html.P(
+                        id="AppTitle",
+                        className="temp middle title",
+                        children=[
+                            "The Capital Fund",
                         ],
                     ),
                     dbc.Row(
