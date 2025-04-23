@@ -199,7 +199,7 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
     columns = ["DATE", "BTC", "AAPL", "NVDA", "MSFT", "AMZN", "ETH", "META"]
     sentiments_df = pd.DataFrame(sentiments_data)[columns].copy()
     sentiments_df["DATE"] = pd.to_datetime(sentiments_df["DATE"])
-    sentiments_df = sentiments_df[(sentiments_df["DATE"] >= "2025-03-01") & (sentiments_df["DATE"] <= "2025-04-22")]
+    sentiments_df = sentiments_df[(sentiments_df["DATE"] >= "2025-03-01") & (sentiments_df["DATE"] <= "2025-05-01")]
     assets = columns[1:]
     # create evenly spaced x axis ticks:
     first_date = sentiments_df["DATE"].min()
@@ -275,7 +275,7 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
     sentiments_df = pd.DataFrame(sentiments_data)
     fangs_df = sentiments_df[["DATE", "STOCK", "CRYPTO"]].copy()
     fangs_df["DATE"] = pd.to_datetime(fangs_df["DATE"])
-    fangs_df = fangs_df[(fangs_df["DATE"] >= "2025-03-01") & (fangs_df["DATE"] <= "2025-04-22")]
+    fangs_df = fangs_df[(fangs_df["DATE"] >= "2025-03-01") & (fangs_df["DATE"] <= "2025-05-01")]
     # assign fear and greed labels:
     fangs_df["STOCK_label"] = fangs_df["STOCK"].apply(_fang_level)
     fangs_df["CRYPTO_label"] = fangs_df["CRYPTO"].apply(_fang_level)
