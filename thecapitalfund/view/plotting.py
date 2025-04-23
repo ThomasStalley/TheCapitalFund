@@ -21,7 +21,7 @@ def get_assets_figure(data: pd.DataFrame) -> go.Figure:
     days = data["DateTime"]
     # calculate percentage that each asset contributes to fund price:
     tcf_price_today = data["ACF"][-1]
-    van_name = f"VAN [{round(100 * (data['VAN'][-1] * 8 / tcf_price_today), 2)}%]"
+    van_name = f"VAEIAGA [{round(100 * (data['VAN'][-1] * 8 / tcf_price_today), 2)}%]"
     btc_name = f"BTC [{round(100 * (data['BTC'][-1] * 0.0014349 / tcf_price_today), 2)}%]"
     eth_name = f"ETH [{round(100 * (data['ETH'][-1] * 0.0199347 / tcf_price_today), 2)}%]"
     # create and format assets graph:
