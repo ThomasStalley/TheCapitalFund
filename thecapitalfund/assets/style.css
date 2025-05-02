@@ -438,3 +438,10 @@ p, th, td {
   color: #636363;
   margin-bottom: 5px;
 }
+
+.note {
+  font-size: 14px;
+  color: grey;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

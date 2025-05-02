@@ -273,6 +273,7 @@ def get_layout() -> html.Div:
         id="IntelTab",
         children=[
             dbc.Row(dbc.Col(html.P("Asset Sentiments", className="subtitle"))),
+            dbc.Row(dbc.Col(html.P("data from eodhd.com", className="note"))),
             dbc.Row(
                 dbc.Col(
                     id="Sentimentsontainer",
@@ -290,6 +291,7 @@ def get_layout() -> html.Div:
             ),
             html.P("spacer", style={"font-size": "2px", "opacity": "0"}),
             dbc.Row(dbc.Col(html.P("Market Fear And Greed", className="subtitle"))),
+            dbc.Row(dbc.Col(html.P("data from feargreedmeter.com", className="note"))),
             dbc.Row(
                 dbc.Col(
                     id="FangPlottingContainer",
