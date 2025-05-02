@@ -442,6 +442,7 @@ p, th, td {
 .note {
   font-size: 14px;
   color: grey;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: -15px;
+  margin-bottom: 5px;
+  font-style: italic;
 }
