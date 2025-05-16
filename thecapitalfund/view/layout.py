@@ -704,13 +704,6 @@ def get_layout() -> html.Div:
             html.Div(
                 children=[
                     html.P(
-                        id="FreezeTitle",
-                        className="temp middle title",
-                        children=[
-                            "App Frozen 01-05-25",
-                        ],
-                    ),
-                    html.P(
                         id="AppTitle",
                         className="temp middle title",
                         children=[
@@ -824,6 +817,13 @@ def get_layout() -> html.Div:
                                     ),
                                 ],
                             ),
+                        ],
+                    ),
+                    html.P(
+                        id="FreezeTitle",
+                        className="middle italic title",
+                        children=[
+                            "APP FROZEN 01-05-25",
                         ],
                     ),
                 ]
