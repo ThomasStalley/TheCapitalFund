@@ -434,9 +434,9 @@ p, th, td {
 }
 
 #FreezeTitle {
-  font-size: 14px;
-  color: #636363;
-  margin-bottom: 5px;
+  font-size: 12px;
+  color: #C22C22;
+  margin-top: 10px;
 }
 
 .note {
