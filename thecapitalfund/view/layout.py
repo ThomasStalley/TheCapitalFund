@@ -819,13 +819,6 @@ def get_layout() -> html.Div:
                             ),
                         ],
                     ),
-                    html.P(
-                        id="FreezeTitle",
-                        className="middle italic title",
-                        children=[
-                            "APP FROZEN 01-05-25",
-                        ],
-                    ),
                 ]
             ),
         ],
