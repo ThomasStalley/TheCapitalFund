@@ -10,6 +10,7 @@ PERFORMANCE_PALETTE = ["#000000", "#BC0909", "#C1550D", "#DBAD07"]
 
 def get_total_figure(data: pd.DataFrame) -> go.Figure:
     """Create plot to show fund price over time, or account balance over time when logged in."""
+    data = data.sort_values("DateTime")
     total_fig = px.line()
     total_fig.add_scatter(x=data["DateTime"], y=data["ACF"], name="", line=dict(color=PERFORMANCE_PALETTE[0]))
     _format_performance_figure(total_fig)
