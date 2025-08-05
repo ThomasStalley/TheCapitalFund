@@ -12,7 +12,8 @@ def main():
     app.title = "The Capital Fund"
     app.layout = layout.get_layout()
     port = int(os.environ.get("PORT", 8050))
-    app.run_server(host="0.0.0.0", port=port, debug=False)
+    print(f"🚀 Starting Dash app on port {port}", flush=True)
+    app.run_server(host="0.0.0.0", port=port, debug=False, use_reloader=False)
 
 
 if __name__ == "__main__":
