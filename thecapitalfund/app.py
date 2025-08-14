@@ -4,16 +4,14 @@ from dash import Dash
 from dash_bootstrap_components.themes import BOOTSTRAP
 
 from thecapitalfund.controller import callbacks  # noqa
-from thecapitalfund.view import layout
+from thecapitalfund.view import layout  # noqa
 
 
 def main():
     app = Dash(__name__, external_stylesheets=[BOOTSTRAP])
     app.title = "The Capital Fund"
     app.layout = layout.get_layout()
-    port = int(os.environ.get("PORT", 8050))
-    print(f"🚀 Starting Dash app on port {port}", flush=True)
-    app.run_server(host="0.0.0.0", port=port, debug=False, use_reloader=False)
+    app.run_server(host="0.0.0.0", port=int(os.environ["PORT"]), debug=False, use_reloader=False)
 
 
 if __name__ == "__main__":
