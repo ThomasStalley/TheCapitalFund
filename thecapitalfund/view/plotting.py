@@ -265,7 +265,7 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
     fangs_df = sentiments_df[["DATE", "STOCK", "CRYPTO"]].copy()
     fangs_df["DATE"] = pd.to_datetime(fangs_df["DATE"])
     end_date = datetime.now()
-    start_date = end_date - timedelta(days=90)
+    start_date = end_date - timedelta(days=60)
     fangs_df = fangs_df[(fangs_df["DATE"] >= start_date) & (fangs_df["DATE"] <= end_date)]
     # assign fear and greed labels:
     fangs_df["STOCK_label"] = fangs_df["STOCK"].apply(_fang_level)
@@ -289,18 +289,6 @@ def get_fangs_fig(sentiments_data: list) -> go.Figure:
             hovertemplate="%{x|%Y-%m-%d}: %{y:.2f} (%{text})",
             line=dict(color=colors[i]),
         )
-    fangs_fig.add_annotation(
-        x=-0.02,
-        y=-0.02,
-        xref="paper",
-        yref="paper",
-        text="source: feargreedmeter.com",
-        showarrow=False,
-        font=dict(family="Serif", size=10, color="grey"),
-        align="left",
-        xanchor="left",
-        yanchor="bottom",
-    )
     fangs_fig.update_layout(
         template="plotly_white",
         margin=dict(l=0, r=0, t=0, b=0),
