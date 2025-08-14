@@ -200,13 +200,20 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
     columns = ["DATE", "BTC", "AAPL", "NVDA", "MSFT", "AMZN", "ETH", "META"]
     sentiments_df = pd.DataFrame(sentiments_data)[columns].copy()
     sentiments_df["DATE"] = pd.to_datetime(sentiments_df["DATE"])
-    sentiments_df = sentiments_df[(sentiments_df["DATE"] >= "2025-03-01") & (sentiments_df["DATE"] <= "2025-05-01")]
+
+    # ✅ Show last 60 days instead of fixed date range
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=60)
+    sentiments_df = sentiments_df[(sentiments_df["DATE"] >= start_date) & (sentiments_df["DATE"] <= end_date)]
+
     assets = columns[1:]
+
     # create evenly spaced x axis ticks:
     first_date = sentiments_df["DATE"].min()
     last_date = sentiments_df["DATE"].max()
     n_ticks = 10
     tickvals = pd.to_datetime(np.linspace(first_date.value, last_date.value, n_ticks)).tolist()
+
     # create line plot with sentiment labels for each asset:
     sentiments_fig = px.line()
     for i, asset in enumerate(assets):
@@ -219,6 +226,7 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
             hovertemplate="%{x|%Y-%m-%d}: %{y:.2f} (%{text})",
             line=dict(color=INTEL_PALETTE[(i % len(INTEL_PALETTE)) + 2]),
         )
+
     sentiments_fig.update_layout(
         template="plotly_white",
         margin=dict(l=0, r=0, t=0, b=0),
@@ -258,7 +266,6 @@ def get_sentiments_fig(sentiments_data: list) -> go.Figure:
         ),
     )
     return sentiments_fig
-
 
 def get_fangs_fig(sentiments_data: list) -> go.Figure:
     sentiments_df = pd.DataFrame(sentiments_data)
