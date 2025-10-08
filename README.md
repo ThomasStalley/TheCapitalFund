@@ -1,4 +1,4 @@
-_**📈 The Fund 📈**_
+_**📈 The Capital Fund 📈**_
 
 A mock investment fund portfolio web application.
 
