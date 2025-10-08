@@ -1,6 +1,6 @@
-_**📈 The Capital Fund 📈**_
+_**📈 The Fund 📈**_
 
-A mock investment fund web application.
+A mock investment fund portfolio web application.
 
 The app is updated daily, with real world financial data, sourced from an asset price api.
 
