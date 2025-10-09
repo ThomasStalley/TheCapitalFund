@@ -11,7 +11,7 @@ def main():
     app = Dash(__name__, external_stylesheets=[BOOTSTRAP])
     app.title = "Auchester Asset Management"
     app.layout = layout.get_layout()
-    app.run_server(host="0.0.0.0", port=int(os.environ["PORT"]), debug=False, use_reloader=False)
+    app.run_server(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)) , debug=False, use_reloader=False)
 
 
 if __name__ == "__main__":
