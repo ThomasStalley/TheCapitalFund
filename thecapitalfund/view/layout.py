@@ -819,16 +819,6 @@ def get_layout() -> html.Div:
                             ),
                         ],
                     ),
-                    html.P(
-                        id="AppFooter",
-                        className="temp middle",
-                        children=["Auchester Asset Management"],
-                        style={
-                            "color": "#BC0909",
-                            "fontSize": "12px",
-                            "marginTop": "16px",
-                        },
-                    ),
                 ]
             ),
         ],

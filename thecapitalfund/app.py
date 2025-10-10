@@ -9,7 +9,7 @@ from thecapitalfund.view import layout  # noqa
 
 def main():
     app = Dash(__name__, external_stylesheets=[BOOTSTRAP])
-    app.title = "Auchester Asset Management"
+    app.title = "The Capital Fund"
     app.layout = layout.get_layout()
     port = int(os.environ.get("PORT", 10000))
     app.run_server(host="0.0.0.0", port=port, debug=False, use_reloader=False)
