@@ -658,7 +658,7 @@ def get_layout() -> html.Div:
                                                                             id="render-desc",
                                                                         ),
                                                                         html.Div(
-                                                                            "capital.auchester.com",
+                                                                            "thecapitalfund.onrender.com",
                                                                             className="service-url",
                                                                             id="render-url",
                                                                         ),
