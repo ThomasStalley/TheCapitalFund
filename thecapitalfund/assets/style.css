@@ -72,6 +72,10 @@ p, th, td {
   text-align: center;
 }
 
+#AppTitle {
+  margin-bottom: 0.2rem;
+}
+
 #PerformanceBar {
   width: 100%;
   border-radius: 0.25rem;
