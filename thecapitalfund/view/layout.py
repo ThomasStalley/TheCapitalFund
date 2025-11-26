@@ -313,7 +313,7 @@ def get_layout() -> html.Div:
                 dbc.Col(
                     children=[
                         html.P(
-                            "Today's curated news stories - headlines and summaries produced using gpt-4o-mini.",
+                            "Today's curated news stories - headlines and summaries produced using gpt-4.1-nano.",
                         ),
                     ],
                 )
