@@ -339,7 +339,7 @@ def get_layout() -> html.Div:
                                                     news_row["SUMMARY"],
                                                     html.Br(),
                                                     html.Span(
-                                                        f"{news_row['ASSET']} accounts for {news_row['ASSET_PERCENTAGE']:.4f}% of The AAM Developed World Fund.",
+                                                        f"{news_row['ASSET']} accounts for {news_row['ASSET_PERCENTAGE']:.4f}% of The Capital Fund.",
                                                         style={"color": "grey", "font-style": "italic"},
                                                     ),
                                                 ],
