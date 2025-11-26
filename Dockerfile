@@ -10,11 +10,9 @@ ENV PATH="/root/.local/bin:$PATH"
 
 ENV PORT=10000
 
-COPY pyproject.toml poetry.lock /app/
+COPY . /app
 
 RUN poetry install
-
-COPY . /app
 
 EXPOSE 10000
 
