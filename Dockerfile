@@ -16,4 +16,4 @@ RUN poetry install
 
 EXPOSE 10000
 
-CMD ["poetry", "run", "python", "--", "-u", "thecapitalfund/app.py"]
+CMD ["poetry", "run", "python", "-u", "thecapitalfund/app.py"]
