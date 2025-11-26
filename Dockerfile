@@ -12,7 +12,7 @@ ENV PORT=10000
 
 COPY pyproject.toml poetry.lock /app/
 
-RUN poetry install --no-root
+RUN poetry install
 
 COPY . /app
 
