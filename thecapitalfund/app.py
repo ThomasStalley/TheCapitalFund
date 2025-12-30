@@ -1,8 +1,7 @@
 import os
-
 from dash import Dash
+from flask import jsonify
 from dash_bootstrap_components.themes import BOOTSTRAP
-
 from thecapitalfund.controller import callbacks  # noqa
 from thecapitalfund.view import layout  # noqa
 
@@ -11,6 +10,11 @@ def main():
     app = Dash(__name__, external_stylesheets=[BOOTSTRAP])
     app.title = "The Capital Fund"
     app.layout = layout.get_layout()
+
+    @app.server.route("/health")
+    def health():
+        return jsonify({"status": "healthy"}), 200
+
     port = int(os.environ.get("PORT", 10000))
     app.run_server(host="0.0.0.0", port=port, debug=False, use_reloader=False)
 

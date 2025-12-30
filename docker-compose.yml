@@ -6,7 +6,8 @@ services:
     image: the_capital_fund_image
     container_name: the_capital_fund_container
     ports:
-      - "8050:8050"
+      - "10000:10000"
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
+      - PORT=10000

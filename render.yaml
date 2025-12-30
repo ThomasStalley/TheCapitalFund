@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: thecapitalfund
+    env: docker
+    plan: starter
+    healthCheckPath: /health
+    autoDeploy: true
