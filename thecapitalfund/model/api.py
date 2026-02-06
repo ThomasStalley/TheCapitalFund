@@ -11,7 +11,7 @@ api_key = os.environ.get("API_KEY")
 
 def api_get_request(data_slug: str, data_key: str):
     """Perform GET request to capital API, to grab day, member or transaction data."""
-    url = f"https://capitalcsc.onrender.com/{data_slug}/"
+    url = f"https://api.auchester.com/{data_slug}/"
     headers = {"API-KEY": api_key}
     request = requests.get(url=url, headers=headers)
     # check if the request was successful:
