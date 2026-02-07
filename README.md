@@ -6,25 +6,6 @@ The app is updated daily, with real world financial data, sourced from an asset 
 
 $$. . .$$
 
-_**🚀 Quick Start 🚀**_
-
-build the docker container:
-```
-docker-compose build --no-cache
-```
-
-run the container:
-```
-docker-compose up -d
-```
-
-stop the container:
-```
-docker-compose down
-```
-
-$$. . .$$
-
 _**🗂 Project Structure 🗂**_
 
 model-view-controller architecture:
