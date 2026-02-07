@@ -1,4 +1,4 @@
-name: redeploy
+name: deploy
 
 on:
   push:
@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: checkout repo content
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: set up python 3.9
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
@@ -43,6 +43,57 @@ jobs:
     needs: checks
     if: ${{ success() }}
     steps:
-      - name: trigger redeploy
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: login to ecr
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: build, tag, push to ecr
+        env:
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          ECR_REPOSITORY: thecapitalfund
+          IMAGE_TAG: latest
         run: |
-          curl -X POST "${{ secrets.RENDER_WEBHOOK_URL }}"
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: deploy to ecs
+        run: |
+          aws ecs update-service \
+            --cluster thecapitalfund \
+            --service thecapitalfund \
+            --force-new-deployment
+
+      - name: wait for deployment
+        run: |
+          aws ecs wait services-stable \
+            --cluster thecapitalfund \
+            --services thecapitalfund
+
+      - name: update dns
+        run: |
+          TASK_ARN=$(aws ecs list-tasks --cluster thecapitalfund --service-name thecapitalfund --query 'taskArns[0]' --output text)
+          ENI_ID=$(aws ecs describe-tasks --cluster thecapitalfund --tasks $TASK_ARN --query 'tasks[0].attachments[0].details[?name==`networkInterfaceId`].value' --output text)
+          PUBLIC_IP=$(aws ec2 describe-network-interfaces --network-interface-ids $ENI_ID --query 'NetworkInterfaces[0].Association.PublicIp' --output text)
+          ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name app.auchester.com --query 'HostedZones[0].Id' --output text)
+          aws route53 change-resource-record-sets --hosted-zone-id $ZONE_ID --change-batch '{
+            "Changes": [{
+              "Action": "UPSERT",
+              "ResourceRecordSet": {
+                "Name": "app.auchester.com",
+                "Type": "A",
+                "TTL": 60,
+                "ResourceRecords": [{"Value": "'"$PUBLIC_IP"'"}]
+              }
+            }]
+          }'
+          echo "app.auchester.com -> $PUBLIC_IP"
