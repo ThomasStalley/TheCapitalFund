@@ -14,6 +14,10 @@ output "nameservers" {
   value = aws_route53_zone.app.name_servers
 }
 
-output "hosted_zone_id" {
-  value = aws_route53_zone.app.zone_id
+output "alb_dns_name" {
+  value = aws_lb.app.dns_name
+}
+
+output "app_url" {
+  value = "https://app.auchester.com"
 }
