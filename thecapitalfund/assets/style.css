@@ -319,20 +319,22 @@ p, th, td {
 }
 
 .aws-container {
-  height: 200px;
+  height: auto;
   padding: 15px;
+  padding-bottom: 30px;
   margin: 10px;
   border-radius: 0.2rem;
-  background-color: rgba(255, 153, 0, 0.5);
+  background-color: rgba(232, 131, 0, 0.6);
   position: relative;
 }
 
 .render-container {
-  height: 200px;
-  padding: 20px;
+  height: auto;
+  padding: 15px;
+  padding-bottom: 30px;
   margin: 10px;
   border-radius: 0.2rem;
-  background-color: rgba(138, 5, 255, 0.5);
+  background-color: rgba(232, 131, 0, 0.6);
   position: relative;
 }
 
@@ -373,9 +375,9 @@ p, th, td {
   color: #8B0000;
 }
 
-.render-box {
-  height: 153px;
+.service-box-full {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -384,12 +386,6 @@ p, th, td {
   font-family: "EB Garamond, serif";
   text-align: center;
   background-color: white;
-  transform: translate(0px, -4px);
-}
-
-.render-desc {
-  font-size: 16px;
-  margin-top: 5px;
 }
 
 .col-padding-5 {
