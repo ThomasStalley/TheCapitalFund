@@ -24,4 +24,3 @@ model-view-controller architecture:
     ├── view/
     └── controller/
 ```
- 
