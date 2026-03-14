@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: thecapitalfund
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /health
+    envVars:
+      - key: API_KEY
+        sync: false

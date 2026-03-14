@@ -1,0 +1,38 @@
+name: checks
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      API_KEY: ${{ secrets.API_KEY }}
+
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v4
+
+      - name: set up python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: install poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python -
+
+      - name: configure poetry
+        run: |
+          poetry config virtualenvs.create false
+
+      - name: install dependencies with poetry
+        run: |
+          poetry install
+
+      - name: lint with ruff
+        run: |
+          poetry run ruff check . --fix --line-length 120
